@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-surface text-gray-200;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply px-6 py-3 bg-primary text-black font-semibold rounded-full shadow-lg hover:bg-yellow-400 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-3 bg-transparent text-white font-semibold rounded-full border border-dark-border hover:bg-dark-card transition-all duration-300;
+    }
+
+    .input-field {
+        @apply w-full px-4 py-3 bg-dark-card border border-dark-border rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300;
+    }
+
+    .glass {
+        @apply bg-dark-card/80 backdrop-blur-lg border border-dark-border shadow-xl;
+    }
+
+    .glass-dark {
+        @apply bg-surface/90 backdrop-blur-xl border border-dark-border shadow-2xl;
+    }
+
+    /* Liquid Glass Effect for Scrolled Navbar */
+    .navbar-scrolled {
+        @apply bg-surface/95 backdrop-blur-xl border-b border-dark-border shadow-2xl;
+    }
+
+    .card-hover {
+        @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    }
+}
+
+/* Animations */
+/* Smooth Scroll */
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+.text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+}

@@ -1,13 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <title>Real Estate - Find Your Dream Home</title>
+</head>
+
+<body class="bg-surface font-sans antialiased text-gray-200 overflow-x-hidden selection:bg-primary/30">
+    <div id="navbar"></div>
+
+    <!-- Hero Section -->
+    <div class="relative min-h-screen flex items-center justify-center overflow-hidden bg-surface">
+        <!-- Background with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-surface via-surface to-dark-card z-10"></div>
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            </div>
+        </div>
+
+        <!-- content -->
+        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+            <div class="animate-float">
+                <span
+                    class="inline-block py-2 px-4 rounded-full bg-dark-card border border-dark-border text-gray-400 text-sm font-medium mb-6">
+                    The #1 Real Estate Platform
+                </span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-8 tracking-tight leading-tight">
+                A Simple Path To <br>
+                <span class="text-primary">Dream Home</span>
+            </h1>
+
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400 mb-10 leading-relaxed">
+                Find your next dream home with our extensive list of properties. From modern apartments to luxury
+                villas.
+            </p>
+
+            <!-- Email Input + CTA -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-xl mx-auto mb-16">
+                <input type="email" placeholder="Enter Your Email Here"
+                    class="input-field flex-grow text-center sm:text-left">
+                <button class="btn-primary whitespace-nowrap">
+                    Sign Up
+                </button>
+            </div>
+
+            <!-- Dashboard Preview Card -->
+            <div class="relative mx-auto max-w-5xl">
+                <div class="glass rounded-2xl p-4 shadow-2xl border border-dark-border">
+                    <img src="https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                        alt="Dashboard Preview" class="rounded-lg w-full shadow-inner">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Marquee Section -->
+    <div class="py-20 bg-surface overflow-hidden">
+        <div class="text-center mb-12">
+            <span class="text-primary text-sm font-semibold uppercase tracking-wider">Testimonials</span>
+            <h2 class="text-3xl font-bold text-white mt-2">What Our Clients Say</h2>
+        </div>
+
+        <div class="relative w-full max-w-full overflow-hidden">
+            <div class="flex animate-marquee space-x-6 w-max px-4">
+                <!-- Testimonial Card 1 -->
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Sarah Johnson</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"I found my dream apartment in less than a week! The platform is so
+                        easy to use."</p>
+                </div>
+                <!-- Testimonial Card 2 -->
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Michael Chen</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"Professional agents and premium listings. Highly recommended for
+                        first-time buyers."</p>
+                </div>
+                <!-- Testimonial Card 3 -->
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Emily Davis</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"The virtual tours helped us decide on our vacation home without
+                        traveling. Amazing tech!"</p>
+                </div>
+                <!-- Testimonial Card 4 -->
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">David Wilson</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"Sold my property in 2 days. The exposure this platform gives is
+                        unmatched."</p>
+                </div>
+                <!-- Duplicate cards for seamless loop -->
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Sarah Johnson</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"I found my dream apartment in less than a week! The platform is so
+                        easy to use."</p>
+                </div>
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Michael Chen</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"Professional agents and premium listings. Highly recommended for
+                        first-time buyers."</p>
+                </div>
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Emily Davis</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"The virtual tours helped us decide on our vacation home without
+                        traveling. Amazing tech!"</p>
+                </div>
+                <div
+                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User"
+                            class="w-12 h-12 rounded-full border-2 border-primary/30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">David Wilson</h4>
+                            <div class="flex text-primary text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">"Sold my property in 2 days. The exposure this platform gives is
+                        unmatched."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Management Demo CTA -->
+    <div class="py-20 relative bg-dark-card text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div
+                class="glass rounded-3xl p-8 md:p-16 border border-dark-border flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">For Agents</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">Property Management Made Simple</h2>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                        Are you an agent or property owner? Experience our powerful dashboard to manage listings, track
+                        inquiries, and close deals faster.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="btn-primary">
+                            Request Live Demo
+                        </button>
+                        <a href="#" class="btn-secondary flex items-center justify-center">
+                            <span>Watch Video</span>
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-5/12">
+                    <div
+                        class="relative rounded-2xl overflow-hidden shadow-2xl border border-dark-border transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            alt="Dashboard Preview" class="w-full">
+                        <div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>
