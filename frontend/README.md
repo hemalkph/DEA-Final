@@ -71,3 +71,12 @@ To support the Categorization feature (Villas, Apartments, etc.), the backend `P
 
 The frontend connects to a Spring Boot backend running on `http://localhost:8080`.
 Ensure your backend is running before testing authentication or property data.
+
+## 🔐 Test Credentials
+
+The backend automatically creates the following default users on startup:
+
+| Role | Email | Password | Dashboard |
+|------|-------|----------|-----------|
+| **Admin** | `admin@example.com` | `password` | `/admin-dashboard.html` |
+| **User** | `user@example.com` | `password` | `/user-dashboard.html` |

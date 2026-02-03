@@ -19,6 +19,7 @@ public class AuthenticationService {
         private final UserRepository userRepository;
         private final PasswordEncoder passwordEncoder;
         private final AuthenticationManager authenticationManager;
+        private final JwtService jwtService;
 
         public AuthResponse register(RegisterRequest request) {
                 var user = User.builder()
@@ -26,10 +27,19 @@ public class AuthenticationService {
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))
                                 .role(request.getRole() != null ? request.getRole() : Role.USER)
+                                .enabled(true) // Enable user immediately for regular registration
                                 .build();
                 userRepository.save(user);
+
+                // Generate JWT token for newly registered user
+                String jwtToken = jwtService.generateToken(user);
+
                 return AuthResponse.builder()
                                 .message("User registered successfully")
+                                .token(jwtToken)
+                                .role(user.getRole().name())
+                                .name(user.getName())
+                                .email(user.getEmail())
                                 .build();
         }
 
@@ -38,12 +48,18 @@ public class AuthenticationService {
                                 new UsernamePasswordAuthenticationToken(
                                                 request.getEmail(),
                                                 request.getPassword()));
-                // var user = userRepository.findByEmail(request.getEmail())
-                // .orElseThrow();
-                // In a real app, generate JWT here
+                var user = userRepository.findByEmail(request.getEmail())
+                                .orElseThrow();
+
+                // Generate real JWT token
+                String jwtToken = jwtService.generateToken(user);
+
                 return AuthResponse.builder()
                                 .message("Login successful")
-                                .token("BASIC_AUTH_ENABLED")
+                                .token(jwtToken)
+                                .role(user.getRole().name())
+                                .name(user.getName())
+                                .email(user.getEmail())
                                 .build();
         }
 }

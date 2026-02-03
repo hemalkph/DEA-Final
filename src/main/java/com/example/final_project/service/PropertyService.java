@@ -20,14 +20,16 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
+    private final FileStorageService fileStorageService;
+    private final com.example.final_project.repository.PropertyMediaRepository propertyMediaRepository;
 
     public List<Property> getAllProperties() {
         return propertyRepository.findAll();
     }
 
     public List<Property> searchProperties(String query) {
-        // Simple search by address for now
-        return propertyRepository.findByAddressContainingIgnoreCase(query);
+        // Search by title or address
+        return propertyRepository.findByTitleContainingIgnoreCaseOrAddressContainingIgnoreCase(query, query);
     }
 
     public List<Property> getPropertiesByType(PropertyType type) {
@@ -39,17 +41,19 @@ public class PropertyService {
     }
 
     public Property createProperty(Property property) {
-        // Get current logged in user (Agent)
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
+        // Try to get current logged in user (Agent) - but make it optional
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof UserDetails) {
+                String username = ((UserDetails) principal).getUsername();
+                User agent = userRepository.findByEmail(username).orElse(null);
+                property.setAgent(agent);
+            }
+        } catch (Exception e) {
+            // No authenticated user - that's okay for admin panel
+            property.setAgent(null);
         }
 
-        User agent = userRepository.findByEmail(username).orElseThrow();
-        property.setAgent(agent);
         property.setCreatedAt(LocalDateTime.now());
         if (property.getStatus() == null)
             property.setStatus(PropertyStatus.AVAILABLE);
@@ -57,7 +61,144 @@ public class PropertyService {
         return propertyRepository.save(property);
     }
 
+    public Property updateProperty(Long id, Property updatedProperty) {
+        Property existingProperty = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
+
+        // Update fields
+        existingProperty.setTitle(updatedProperty.getTitle());
+        existingProperty.setDescription(updatedProperty.getDescription());
+        existingProperty.setAddress(updatedProperty.getAddress());
+        existingProperty.setPrice(updatedProperty.getPrice());
+        existingProperty.setType(updatedProperty.getType());
+        existingProperty.setStatus(updatedProperty.getStatus());
+        existingProperty.setImageUrl(updatedProperty.getImageUrl());
+        existingProperty.setBedrooms(updatedProperty.getBedrooms());
+        existingProperty.setBathrooms(updatedProperty.getBathrooms());
+        existingProperty.setAreaSqFt(updatedProperty.getAreaSqFt());
+        existingProperty.setAssignedAgent(updatedProperty.getAssignedAgent());
+
+        return propertyRepository.save(existingProperty);
+    }
+
     public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
+    }
+
+    /**
+     * Submit a property from the public form with file uploads.
+     * Property status is set to PENDING for admin review.
+     */
+    public Property submitProperty(com.example.final_project.dto.PropertySubmissionDTO dto,
+            org.springframework.web.multipart.MultipartFile[] files) {
+        // Find agent by name if provided
+        User selectedAgent = null;
+        if (dto.getAgentName() != null && !dto.getAgentName().isEmpty()) {
+            selectedAgent = userRepository.findAll().stream()
+                    .filter(u -> u.getName().equals(dto.getAgentName()))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        // Build property entity
+        Property property = Property.builder()
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .address(dto.getAddress())
+                .price(dto.getPrice())
+                .type(determinePropertyType(dto.getType()))
+                .status(PropertyStatus.PENDING)
+                .bedrooms(dto.getBedrooms())
+                .bathrooms(dto.getBathrooms())
+                .areaSqFt(dto.getAreaSqFt())
+                .facilities(dto.getAmenities() != null ? dto.getAmenities() : new java.util.ArrayList<>())
+                .ownerName(dto.getOwnerName())
+                .ownerPhone(dto.getOwnerPhone())
+                .ownerEmail(dto.getOwnerEmail())
+                .agent(selectedAgent)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        // Save property first to get ID
+        property = propertyRepository.save(property);
+
+        // Store uploaded files and create PropertyMedia records
+        if (files != null && files.length > 0) {
+            for (org.springframework.web.multipart.MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    String filePath = fileStorageService.storeFile(file);
+
+                    com.example.final_project.model.PropertyMedia media = com.example.final_project.model.PropertyMedia
+                            .builder()
+                            .property(property)
+                            .filePath(filePath)
+                            .build();
+
+                    propertyMediaRepository.save(media);
+
+                    // Set first image as main imageUrl
+                    if (property.getImageUrl() == null) {
+                        property.setImageUrl(filePath);
+                    }
+                }
+            }
+
+            // Update property with main image
+            property = propertyRepository.save(property);
+        }
+
+        return property;
+    }
+
+    private PropertyType determinePropertyType(String typeStr) {
+        // Map form values like "HOUSE", "APARTMENT" to SALE/RENT
+        // Since the form doesn't specify SALE vs RENT, default to SALE
+        // This can be enhanced later with a form field
+        return PropertyType.SALE;
+    }
+
+    /**
+     * Get all properties with PENDING status for admin review.
+     */
+    public List<Property> getPendingProperties() {
+        return propertyRepository.findByStatus(PropertyStatus.PENDING);
+    }
+
+    /**
+     * Approve a pending property - changes status to AVAILABLE.
+     */
+    public Property approveProperty(Long id) {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
+
+        if (property.getStatus() != PropertyStatus.PENDING) {
+            throw new RuntimeException("Property is not in PENDING status");
+        }
+
+        property.setStatus(PropertyStatus.AVAILABLE);
+        return propertyRepository.save(property);
+    }
+
+    /**
+     * Reject a pending property - sets status to REJECTED with reason.
+     */
+    public Property rejectProperty(Long id, String reason) {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
+
+        if (property.getStatus() != PropertyStatus.PENDING) {
+            throw new RuntimeException("Property is not in PENDING status");
+        }
+
+        property.setStatus(PropertyStatus.REJECTED);
+        property.setRejectionReason(reason);
+        return propertyRepository.save(property);
+    }
+
+    /**
+     * Get all properties submitted by a specific user (by owner email).
+     */
+    public List<Property> getPropertiesByOwnerEmail(String ownerEmail) {
+        return propertyRepository.findByOwnerEmail(ownerEmail);
     }
 }

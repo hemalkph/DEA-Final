@@ -17,4 +17,10 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     List<Property> findByPriceLessThanEqual(java.math.BigDecimal price);
 
     List<Property> findByAddressContainingIgnoreCase(String address);
+
+    List<Property> findByTitleContainingIgnoreCaseOrAddressContainingIgnoreCase(String title, String address);
+
+    long countByStatus(PropertyStatus status);
+
+    List<Property> findByOwnerEmail(String ownerEmail);
 }

@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse {
-    private String token; // In this simple version, maybe just return user details or a placeholder token
+    private String token;
     private String message;
+    private String role;
+    private String name;
+    private String email;
 }

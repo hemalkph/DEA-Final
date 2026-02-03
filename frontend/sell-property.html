@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <title>Sell Your Property - Real Estate</title>
+</head>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<body class="bg-surface font-sans antialiased text-gray-200 overflow-x-hidden selection:bg-primary/30">
+    <div id="navbar"></div>
+
+    <!-- Hero Section -->
+    <div class="relative py-20 bg-surface overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span
+                class="inline-block py-2 px-4 rounded-full bg-dark-card border border-primary/30 text-primary text-sm font-medium mb-6 flex items-center justify-center gap-2 mx-auto w-fit">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20with%20Hearts.webp"
+                    alt="Hearts" width="24" height="24">
+                Sell Smarter, Not Harder
+            </span>
+
+            <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-6 tracking-tight leading-tight">
+                Turn Your Property Into <br>
+                <span class="text-primary inline-flex items-center gap-2">
+                    Profit Today
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Money%20Bag.webp"
+                        alt="Money" width="50" height="50">
+                </span>
+            </h1>
+
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400 mb-10 leading-relaxed">
+                List your property with us and connect with thousands of verified buyers. AI-powered matching,
+                professional photography, and expert support.
+            </p>
+        </div>
+    </div>
+
+    <!-- Property Valuation Tool -->
+    <div class="py-16 bg-dark-card">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass rounded-3xl p-8 border border-dark-border">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Chart%20Increasing.webp"
+                            width="32" height="32" alt="Chart">
+                        Property Valuation Tool
+                    </h2>
+                    <p class="text-gray-400">Get an instant estimate of your property's value</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4 items-center">
+                    <div class="flex-grow relative w-full">
+                        <input type="text" id="valuationAddress" placeholder="Enter your property address..."
+                            class="input-field pr-12 w-full">
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2">
+                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <button id="getValuationBtn" class="btn-primary whitespace-nowrap">Get Estimate</button>
+                </div>
+
+                <div id="valuationResult" class="hidden mt-8 text-center">
+                    <p class="text-gray-400 text-sm mb-2">Estimated Property Value</p>
+                    <p class="text-4xl font-bold text-primary" id="estimatedValue">LKR 0</p>
+                    <p class="text-gray-500 text-xs mt-2">*Based on market analysis and comparable properties</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Sell With Us -->
+    <div class="py-20 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-primary text-sm font-semibold uppercase tracking-wider">Why Choose Us</span>
+                <h2 class="text-3xl font-bold text-white mt-2">Sell Faster With Our Platform</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Benefit 1 -->
+                <div class="glass p-6 rounded-2xl border border-dark-border hover:border-primary/50 transition-colors">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Travel%20and%20Places/Globe%20Showing%20Asia-Australia.webp"
+                            width="40" height="40" alt="Globe">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">100k+ Buyers</h3>
+                    <p class="text-gray-400 text-sm">Massive reach to verified buyers actively looking for properties
+                        like yours.</p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="glass p-6 rounded-2xl border border-dark-border hover:border-primary/50 transition-colors">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Coin.webp"
+                            width="40" height="40" alt="Coin">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">1.5% Commission</h3>
+                    <p class="text-gray-400 text-sm">Industry-leading low fees. Keep more of your sale proceeds.</p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="glass p-6 rounded-2xl border border-dark-border hover:border-primary/50 transition-colors">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Robot.webp"
+                            width="40" height="40" alt="Robot">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AI Matching</h3>
+                    <p class="text-gray-400 text-sm">Smart buyer-seller matching powered by advanced algorithms.</p>
+                </div>
+
+                <!-- Benefit 4 -->
+                <div class="glass p-6 rounded-2xl border border-dark-border hover:border-primary/50 transition-colors">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Camera.webp"
+                            width="40" height="40" alt="Camera">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Pro Photography</h3>
+                    <p class="text-gray-400 text-sm">Free professional photography included with every listing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Process Roadmap -->
+    <div class="py-20 bg-dark-card">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-primary text-sm font-semibold uppercase tracking-wider">Simple Process</span>
+                <h2 class="text-3xl font-bold text-white mt-2">3 Steps to Sell Your Property</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="relative text-center">
+                    <div
+                        class="w-20 h-20 mx-auto rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg shadow-primary/30">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">List Your Property</h3>
+                    <p class="text-gray-400 text-sm">Fill out the form below with your property details and upload
+                        photos.</p>
+                    <div
+                        class="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-primary to-transparent -translate-x-1/2">
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative text-center">
+                    <div
+                        class="w-20 h-20 mx-auto rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg shadow-primary/30">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Professional Shoot</h3>
+                    <p class="text-gray-400 text-sm">Our team schedules a professional photography session at your
+                        property.</p>
+                    <div
+                        class="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-primary to-transparent -translate-x-1/2">
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 mx-auto rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg shadow-primary/30">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Close the Deal</h3>
+                    <p class="text-gray-400 text-sm">We connect you with verified buyers and help you close the
+                        deal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agent Matching CTA -->
+    <div class="py-16 bg-surface">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass rounded-3xl p-8 border border-primary/30 text-center">
+                <div class="text-4xl mb-4">🤝</div>
+                <h2 class="text-2xl font-bold text-white mb-2">Not Ready to List Yourself?</h2>
+                <p class="text-gray-400 mb-6">Connect with experienced seller's agents who can guide you through the
+                    entire process.</p>
+                <a href="/agents" class="btn-primary inline-flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
+                    Find a Seller's Agent
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- List Your Property CTA -->
+    <div class="py-20 bg-dark-card" id="list-property-cta">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <span class="text-primary text-sm font-semibold uppercase tracking-wider">Ready To Sell?</span>
+                <h2 class="text-3xl font-bold text-white mt-2">Start Your Listing Journey</h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Join thousands of successful sellers. Log in to your
+                    dashboard to manage your listings, track views, and connect with buyers.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="startListingBtn"
+                    class="btn-primary py-4 px-8 text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                    <span>🚀</span>
+                    List Property Now
+                </button>
+            </div>
+
+            <p class="mt-6 text-sm text-gray-500">
+                Already have an account? <a href="/login.html" class="text-primary hover:underline">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module">
+        import { setupNavbar, setupFooter } from '/src/main.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('startListingBtn');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    const user = localStorage.getItem('user');
+                    if (user) {
+                        window.location.href = '/user-dashboard.html';
+                    } else {
+                        window.location.href = '/login.html';
+                    }
+                });
+            }
+
+            // Valuation Tool logic
+            const valuationBtn = document.getElementById('getValuationBtn');
+            const valuationAddress = document.getElementById('valuationAddress');
+            const valuationResult = document.getElementById('valuationResult');
+            const estimatedValue = document.getElementById('estimatedValue');
+
+            if (valuationBtn) {
+                valuationBtn.addEventListener('click', () => {
+                    if (valuationAddress.value.trim()) {
+                        const randomValue = Math.floor(Math.random() * (50000000 - 5000000) + 5000000);
+                        estimatedValue.textContent = `LKR ${randomValue.toLocaleString()}`;
+                        valuationResult.classList.remove('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

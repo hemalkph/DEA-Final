@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Inquiry Management List</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06f980", // Spring Green
+                        "primary-dark": "#05c766",
+                        "background-dark": "#000000",
+                        "surface-dark": "#111111",
+                        "surface-highlight": "#1a1a1a",
+                        "text-secondary": "#9ca3af",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"],
+                        "body": ["Inter", "Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Utility to vertically center icons */
+        .material-symbols-outlined {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-display overflow-hidden h-screen flex flex-col">
+    <!-- Top Navigation Bar -->
+    <header
+        class="flex-none flex items-center justify-between border-b border-[#27272a] bg-surface-dark px-6 py-3 z-20">
+        <div class="flex items-center gap-8 w-1/3">
+            <a href="/user-dashboard.html"
+                class="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity">
+                <span class="material-symbols-outlined text-3xl">real_estate_agent</span>
+                <h2 class="text-white text-lg font-bold tracking-tight">Spring Estate</h2>
+            </a>
+        </div>
+        <div class="flex-1 max-w-xl">
+            <label class="relative flex items-center w-full group">
+                <span
+                    class="absolute left-4 text-gray-500 material-symbols-outlined group-focus-within:text-primary transition-colors">search</span>
+                <input
+                    class="w-full h-10 bg-surface-highlight border border-[#27272a] rounded-lg pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    placeholder="Search by property, agent, or keyword..." type="text" />
+            </label>
+        </div>
+        <div class="flex items-center justify-end gap-4 w-1/3">
+            <button class="relative p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-[#27272a]">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+            </button>
+            <div class="h-8 w-[1px] bg-[#27272a]"></div>
+            <div class="flex items-center gap-3 pl-2">
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-medium text-white" id="user-name">User</p>
+                    <p class="text-xs text-text-secondary">Dashboard</p>
+                </div>
+                <div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border border-[#27272a]"
+                    data-alt="User profile avatar"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDajVSvhM5PbI5DhsvXLd3t1qXTVa4YdrnZYMZ-zfIAcyy6vVmTDjP0Bf63ABXhfFNjkXsivRU-8U8VZwByVopRkGodRfM8Pb7u3uS1xW_rCiBLT6Vo4GnZpMi6g7_WCrfHcnSPKBC6BDThw9RBPrYDas5pLJNcdJU9iQFJqVKJKQYZSTCsxH1yZqsfa8gpmz5RIX7m-YQA7aiyzFH9JeDCj_OT4s1zf2gWAQzqYWb7i_xQJ8b3BH_NbVG6O5XmHQDHEbNWEIRjMOKZ");'>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Area -->
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Left: Inquiry List Section -->
+        <main class="flex-1 flex flex-col min-w-0 border-r border-[#27272a] bg-black">
+            <!-- Filters & Sorting Toolbar -->
+            <div
+                class="flex-none px-6 py-4 border-b border-[#27272a] flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+                <!-- Status Pills -->
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                    <button
+                        class="flex items-center justify-center h-8 px-4 rounded-full bg-primary/20 text-primary border border-primary/50 text-sm font-medium transition-all hover:bg-primary/30">
+                        All <span class="ml-2 opacity-70 text-xs">24</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center h-8 px-4 rounded-full bg-[#18181b] text-text-secondary border border-[#27272a] hover:border-gray-500 hover:text-white text-sm font-medium transition-all">
+                        Pending <span class="ml-2 opacity-70 text-xs">8</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center h-8 px-4 rounded-full bg-[#18181b] text-text-secondary border border-[#27272a] hover:border-gray-500 hover:text-white text-sm font-medium transition-all">
+                        Replied <span class="ml-2 opacity-70 text-xs">12</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center h-8 px-4 rounded-full bg-[#18181b] text-text-secondary border border-[#27272a] hover:border-gray-500 hover:text-white text-sm font-medium transition-all">
+                        Closed <span class="ml-2 opacity-70 text-xs">4</span>
+                    </button>
+                </div>
+                <!-- Sort Dropdown -->
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-text-secondary uppercase tracking-wider font-semibold">Sort by:</span>
+                    <div class="relative">
+                        <select
+                            class="appearance-none bg-[#18181b] border border-[#27272a] text-white text-sm rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:border-primary cursor-pointer hover:bg-[#27272a] transition-colors">
+                            <option>Newest first</option>
+                            <option>Oldest first</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-2 top-1.5 pointer-events-none text-gray-400 text-sm">expand_more</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Scrollable List -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Card 1: Pending & Unread -->
+                <article
+                    class="group relative flex flex-col md:flex-row gap-4 bg-surface-dark border border-[#27272a] rounded-xl p-4 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(6,249,128,0.1)] transition-all duration-200">
+                    <!-- Unread Indicator -->
+                    <div class="absolute top-4 right-4 md:right-auto md:left-4 md:top-4 z-10">
+                        <span class="flex h-3 w-3">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                        </span>
+                    </div>
+                    <!-- Thumbnail -->
+                    <div class="w-full md:w-48 aspect-video md:aspect-[4/3] rounded-lg bg-cover bg-center shrink-0 border border-[#27272a]"
+                        data-alt="Modern high-rise apartment exterior with glass facade"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyCDHJgbU9g520pcTjsIMWcxeY-Gf3E9fUlEFxfjW9qaqPE0P2hVbh3K1QaEVk37pWWfej16-dFt_ZTqusuFb7nwjwZvVTqezpg3knJKYLUUfWVUFwlxrgbAZbsfeaEt2xOPDLyU_-oU-jQFZLD0zKIQ2Yo-IXyUNeGY1WynB87SfTrXps3QdPbZEaBjvHl6UM8V8JKDLNFnLXdQDM8D2KjtaRza9C5wdpZ-C5KHZrBJ-CPkWO8SWap0-XXxHyk8OygOvoi-e1gWcT');">
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-1 flex flex-col justify-between gap-3">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span
+                                            class="inline-flex items-center rounded-md border border-yellow-500/30 bg-yellow-500/10 px-2 py-0.5 text-xs font-medium text-yellow-500 ring-1 ring-inset ring-yellow-500/20">Pending</span>
+                                        <span class="text-xs text-text-secondary flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[14px]">schedule</span> 2 hrs
+                                            ago
+                                        </span>
+                                    </div>
+                                    <a class="text-lg font-bold text-white group-hover:text-primary transition-colors leading-tight"
+                                        href="#">Modern Loft in Downtown</a>
+                                    <p class="text-text-secondary text-sm mt-0.5">123 Market St, San Francisco • <span
+                                            class="text-white font-semibold">$4,500/mo</span></p>
+                                </div>
+                            </div>
+                            <div class="mt-3 bg-[#1a1a1a] rounded-lg p-3 border border-[#27272a]">
+                                <p class="text-sm text-gray-300 line-clamp-2">"Hi, is this unit still available for a
+                                    viewing this weekend? I'm looking to move in by the first of next month..."</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-[#27272a] mt-1">
+                            <div class="flex items-center gap-2">
+                                <img alt="Agent Avatar" class="h-6 w-6 rounded-full ring-2 ring-[#27272a]"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ6wcaJE3-GlatfpEWEnkSZZOFBhgcunOlfgj7yYvBO6etE954jmxf3kpmFuzQEBiXl2il5OHALjLRp2wcNupap6R4OdC0T10RIohhPbZEB8dRSmO_wKCpPrE7v1eY7fosWHHyP5yZ3_bBHP2M-bIkXqi7bhOy9xnc1UHFbbVr02wOiUFUEBTbqKpcmr6zJIRhpWla1weZeTv7nRnbMeV0lPGW2rQGLBJL4ZpgDKqnggiggm1Ywod45vLSvhw1hTaV3I2GdXlm09s9" />
+                                <span class="text-xs text-gray-400">Assigned to <span class="text-white">Sarah
+                                        Jenkins</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    class="text-xs font-medium text-text-secondary hover:text-white px-3 py-1.5 border border-transparent hover:border-[#3f3f46] rounded-md transition-colors">Mark
+                                    Closed</button>
+                                <button onclick="window.location.href='/inquiry-chat.html'"
+                                    class="flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-black text-xs font-bold px-4 py-1.5 rounded-md transition-colors shadow-[0_0_10px_rgba(6,249,128,0.2)]">
+                                    <span class="material-symbols-outlined text-[16px]">chat</span>
+                                    Open Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!-- Card 2: Replied -->
+                <article
+                    class="group relative flex flex-col md:flex-row gap-4 bg-surface-dark border border-[#27272a] rounded-xl p-4 hover:border-primary/30 transition-all duration-200">
+                    <div class="w-full md:w-48 aspect-video md:aspect-[4/3] rounded-lg bg-cover bg-center shrink-0 border border-[#27272a]"
+                        data-alt="Sunny suburban house with green lawn"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhxbzy0GBVFtAc2AtzDnDgd9s594dFc72rTLfNRaNuImU6XZE1Ru9-XSgw-h8olbp8xFyZaN8EGANM51VMlwxa1JJ7iQpTmksbpDG2tLQmn1GtXh7bu636b83UIwXfIkw0AypymMOSmqOU_QGO2tU8XEoJJcymHNyFABO7B0vpm8KhJ2rujDRxVZ0bKRChAwu6TKuclBXy57HBCYxWeYQ7VSG_yiBC8gDgILsHrAaX370drGgzcYz4q66JGci6t7RfnUFsmUMR7ROq');">
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between gap-3">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">Replied</span>
+                                        <span class="text-xs text-text-secondary flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[14px]">schedule</span> 5 hrs
+                                            ago
+                                        </span>
+                                    </div>
+                                    <a class="text-lg font-bold text-white group-hover:text-primary transition-colors leading-tight"
+                                        href="#">Sunny 2BHK Apartment</a>
+                                    <p class="text-text-secondary text-sm mt-0.5">45 Maple Ave, Suburbs • <span
+                                            class="text-white font-semibold">$2,200/mo</span></p>
+                                </div>
+                            </div>
+                            <div class="mt-3 pl-3 border-l-2 border-[#27272a]">
+                                <p class="text-sm text-text-secondary line-clamp-1 italic">Last message: "Sure, let's
+                                    schedule for Tuesday at 2 PM."</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-[#27272a] mt-1">
+                            <div class="flex items-center gap-2">
+                                <img alt="Agent Avatar" class="h-6 w-6 rounded-full ring-2 ring-[#27272a]"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwDqTHRJSKTM9p7zHy8xx5I6qBVZtCAXvTRHSUkDWGOF1whYav9evWakQNMj8R2V37dQ8hTT2dgVFuQHIlbDGfjhYzikiCguXwk7LNct6um_eBLQLWUEMxDwhIFQcVuhhiONMJFi60fAKgQeqz5NxMeX1Igt47CE5yLTWoLWYd6seM-wZQ7wvxInz_hU6vLCVPtFX_Bp0MookqtDVBrBnmKQvhxy3FPBKMtifL2_C4G0TWmMCjrmA6dW8nL_OAgcgEsD5d3EUL0ISg" />
+                                <span class="text-xs text-gray-400">Assigned to <span class="text-white">Mike
+                                        Ross</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    class="text-xs font-medium text-text-secondary hover:text-white px-3 py-1.5 border border-transparent hover:border-[#3f3f46] rounded-md transition-colors">Mark
+                                    Closed</button>
+                                <button onclick="window.location.href='/inquiry-chat.html'"
+                                    class="flex items-center gap-1.5 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 hover:border-primary/40 text-xs font-bold px-4 py-1.5 rounded-md transition-colors">
+                                    <span class="material-symbols-outlined text-[16px]">forum</span>
+                                    Continue Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!-- Card 3: Pending -->
+                <article
+                    class="group relative flex flex-col md:flex-row gap-4 bg-surface-dark border border-[#27272a] rounded-xl p-4 hover:border-primary/30 transition-all duration-200 opacity-90">
+                    <div class="w-full md:w-48 aspect-video md:aspect-[4/3] rounded-lg bg-cover bg-center shrink-0 border border-[#27272a]"
+                        data-alt="Modern studio apartment interior view"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBApCbsYlkGrlUF0yQyC7eF9aJT72f0n55sqJLTiM2PIbOOcEYtCdxqYdBGu-LmjVebDn6MHNR8t3tid7bS5HGRW6VanXA68vkbo_xNbBlbAgA7Um8e2cWPZBDHCXMOAqZAeIbqc8kicwT8aCi89wgNuAnwmmvwAfIVqe_2PVj3ga3GUdCWKGOBagkr3xRQSbdm2NUzxVzc7_xzbNhR7x8eB8LFEt78pDHppr_fncxFFl12_fFF-TTl008jyElvyX9GQYKnsd-M_6M7');">
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between gap-3">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span
+                                            class="inline-flex items-center rounded-md border border-yellow-500/30 bg-yellow-500/10 px-2 py-0.5 text-xs font-medium text-yellow-500 ring-1 ring-inset ring-yellow-500/20">Pending</span>
+                                        <span class="text-xs text-text-secondary flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[14px]">schedule</span> 1 day
+                                            ago
+                                        </span>
+                                    </div>
+                                    <a class="text-lg font-bold text-white group-hover:text-primary transition-colors leading-tight"
+                                        href="#">Compact Studio near Univ</a>
+                                    <p class="text-text-secondary text-sm mt-0.5">88 University Dr, Campus Area • <span
+                                            class="text-white font-semibold">$1,100/mo</span></p>
+                                </div>
+                            </div>
+                            <div class="mt-3 bg-[#1a1a1a] rounded-lg p-3 border border-[#27272a]">
+                                <p class="text-sm text-gray-300 line-clamp-2">"Hello, do you accept pets? I have a small
+                                    cat."</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-[#27272a] mt-1">
+                            <div class="flex items-center gap-2">
+                                <img alt="Agent Avatar" class="h-6 w-6 rounded-full ring-2 ring-[#27272a]"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIUJNwDWwjmriyZtiF7hDaD0Q6PRmawDhWmGYRlC4sQBSyCNwu1MjXrgRt-j6Mp3q7grhzknDjSBYB0zKndkSH7GDVm7GOCQR45A4jbRqzWYimiJLicd6823ySfUZeqrLH0hdjjiZAqxe-xdLZ3gLPDQj3tLhM4NFYUlPdXrUffxiBL5vxvMcRKSFrcG1Canzx0e5x6Y4n3eUq0LX-V-M_m1W2Rfjm-DTVimQHOACFJ_LUIupaLyE_Oax_hmYQcYGPo5-c7rqy6nwq" />
+                                <span class="text-xs text-gray-400">Assigned to <span class="text-white">Alex
+                                        Morgan</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    class="text-xs font-medium text-text-secondary hover:text-white px-3 py-1.5 border border-transparent hover:border-[#3f3f46] rounded-md transition-colors">Mark
+                                    Closed</button>
+                                <button onclick="window.location.href='/inquiry-chat.html'"
+                                    class="flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-black text-xs font-bold px-4 py-1.5 rounded-md transition-colors shadow-[0_0_10px_rgba(6,249,128,0.2)]">
+                                    <span class="material-symbols-outlined text-[16px]">chat</span>
+                                    Open Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!-- Card 4: Closed -->
+                <article
+                    class="group relative flex flex-col md:flex-row gap-4 bg-surface-dark border border-[#27272a] rounded-xl p-4 opacity-60 hover:opacity-100 transition-all duration-200">
+                    <div class="w-full md:w-48 aspect-video md:aspect-[4/3] rounded-lg bg-cover bg-center shrink-0 border border-[#27272a] grayscale"
+                        data-alt="Cozy cottage with garden in autumn"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCoJOxIu_XiFbTo0MZnCFKlVLRn-M1ZqMCaJn8ZjxwhrXsB_2rza7Kl2ArPY_IWqWLJc5nMf7OB0sPGtX3jdPOMjWrIdQimoTf5WnlbXhNG2NXnM-ba6TU6q38VvWDNe8NzcTbF3CiDLyZyFdgMU7OY62S6l5qr9JQcYyUAHI8NW3hgUH4JNa28vb-drHtgePBtVyEpAgPw198JgA26Jpl6Ig25eAyY2Hdo871CvscoKdY5PiKsVO5JtnJ1YeyvRcbj4tZ7LlcLk9Ij');">
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between gap-3">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-[#27272a] px-2 py-0.5 text-xs font-medium text-gray-400 ring-1 ring-inset ring-gray-500/10">Closed</span>
+                                        <span class="text-xs text-text-secondary flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-[14px]">schedule</span> 3 days
+                                            ago
+                                        </span>
+                                    </div>
+                                    <a class="text-lg font-bold text-gray-300 group-hover:text-primary transition-colors leading-tight line-through decoration-gray-600"
+                                        href="#">Riverside Cottage</a>
+                                    <p class="text-text-secondary text-sm mt-0.5">102 River Rd, Northside • <span
+                                            class="text-gray-400 font-semibold">$3,000/mo</span></p>
+                                </div>
+                            </div>
+                            <div class="mt-3 pl-3 border-l-2 border-[#27272a]">
+                                <p class="text-sm text-text-secondary line-clamp-1">Inquiry closed by agent.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-[#27272a] mt-1">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-lg">check_circle</span>
+                                <span class="text-xs text-gray-400">Resolved</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    class="text-xs font-medium text-text-secondary hover:text-white px-3 py-1.5 rounded-md transition-colors">View
+                                    Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
+        <!-- Right: Sidebar Stats & Settings -->
+        <aside class="w-80 border-l border-[#27272a] bg-[#0c0c0e] hidden xl:flex flex-col p-6 gap-6">
+            <!-- Quick Stats -->
+            <div class="flex flex-col gap-4">
+                <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Quick Stats</h3>
+                <div class="grid grid-cols-1 gap-3">
+                    <div
+                        class="bg-surface-dark border border-[#27272a] p-4 rounded-xl flex items-center justify-between group hover:border-primary/30 transition-colors">
+                        <div>
+                            <p class="text-text-secondary text-xs font-medium">New Today</p>
+                            <p class="text-2xl font-bold text-white mt-1">4</p>
+                        </div>
+                        <div
+                            class="bg-[#1a1a1a] p-2 rounded-lg text-primary group-hover:bg-primary/10 transition-colors">
+                            <span class="material-symbols-outlined">inbox</span>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-surface-dark border border-[#27272a] p-4 rounded-xl flex items-center justify-between group hover:border-primary/30 transition-colors">
+                        <div>
+                            <p class="text-text-secondary text-xs font-medium">Response Rate</p>
+                            <p class="text-2xl font-bold text-white mt-1">98%</p>
+                        </div>
+                        <div
+                            class="bg-[#1a1a1a] p-2 rounded-lg text-primary group-hover:bg-primary/10 transition-colors">
+                            <span class="material-symbols-outlined">bolt</span>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-surface-dark border border-[#27272a] p-4 rounded-xl flex items-center justify-between group hover:border-primary/30 transition-colors">
+                        <div>
+                            <p class="text-text-secondary text-xs font-medium">Avg. Response Time</p>
+                            <p class="text-2xl font-bold text-white mt-1">15m</p>
+                        </div>
+                        <div
+                            class="bg-[#1a1a1a] p-2 rounded-lg text-primary group-hover:bg-primary/10 transition-colors">
+                            <span class="material-symbols-outlined">timelapse</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Settings / Toggles -->
+            <div class="flex flex-col gap-4 pt-6 border-t border-[#27272a]">
+                <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Preferences</h3>
+                <div class="flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <span class="text-sm text-white font-medium">Email Notifications</span>
+                        <span class="text-xs text-text-secondary">Get alerted for new leads</span>
+                    </div>
+                    <!-- Toggle Switch -->
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input checked="" class="sr-only peer" type="checkbox" value="" />
+                        <div
+                            class="w-11 h-6 bg-[#27272a] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                        </div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <span class="text-sm text-white font-medium">Desktop Alerts</span>
+                        <span class="text-xs text-text-secondary">Push notifications</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input class="sr-only peer" type="checkbox" value="" />
+                        <div
+                            class="w-11 h-6 bg-[#27272a] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <!-- Mini Calendar/Schedule Component -->
+            <div class="flex flex-col gap-4 pt-6 border-t border-[#27272a] mt-auto">
+                <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Upcoming Tasks</h3>
+                <div class="bg-surface-dark border border-[#27272a] rounded-xl p-3 space-y-3">
+                    <div class="flex gap-3 items-start">
+                        <div class="bg-primary/20 text-primary rounded-md p-1.5 shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-white font-medium">Tour: Modern Loft</p>
+                            <p class="text-xs text-text-secondary">Today, 4:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                        <div class="bg-[#27272a] text-gray-400 rounded-md p-1.5 shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">call</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-white font-medium">Call: John Doe</p>
+                            <p class="text-xs text-text-secondary">Tomorrow, 10:00 AM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                const nameEl = document.getElementById('user-name');
+                if (nameEl) nameEl.textContent = user.name || 'User';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+package com.example.final_project.dto;
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Data
+public class PropertySubmissionDTO {
+    private String title;
+    private String description;
+    private String address;
+    private BigDecimal price;
+    private String type; // "HOUSE", "APARTMENT", "LAND", "COMMERCIAL"
+    private Integer bedrooms;
+    private Integer bathrooms;
+    private Double areaSqFt;
+    private List<String> amenities;
+
+    // Owner/seller contact info
+    private String ownerName;
+    private String ownerPhone;
+    private String ownerEmail;
+
+    // Selected agent
+    private String agentName;
+}

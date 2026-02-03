@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Real Estate Agents Directory</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00ff80",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#000000", // True black for high-end feel
+                        "surface-dark": "#121212",   // Slightly lighter for cards
+                        "border-dark": "#204b36",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .agent-card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px -10px rgba(0, 255, 128, 0.2);
+        }
+
+        .glass-header {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Ensure navbar doesn't clash */
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+
+    <div id="navbar"></div>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Top Agent Spotlight (Dynamic) -->
+        <section id="topAgentSpotlight" class="mb-12">
+            <div class="relative group overflow-hidden rounded-xl border border-white/10 bg-surface-dark">
+                <div class="flex flex-col md:flex-row min-h-[320px]">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center z-10">
+                        <div
+                            class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+                            <span class="material-symbols-outlined text-sm">stars</span>
+                            Top Agent of the Month
+                        </div>
+                        <h2 id="spotlightName" class="text-4xl md:text-5xl font-extrabold text-white mb-4">Loading...
+                        </h2>
+                        <p id="spotlightBio" class="text-slate-400 text-lg mb-6 max-w-md">Our top performing agent with
+                            exceptional experience and sales record.</p>
+                        <div class="flex gap-4">
+                            <a id="spotlightProfileBtn" href="#"
+                                class="bg-primary text-background-dark px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform">View
+                                Profile</a>
+                            <a id="spotlightContactBtn" href="#"
+                                class="border border-white/20 text-white px-6 py-3 rounded-lg font-bold hover:bg-white/5 transition-all">Contact</a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 relative min-h-[300px]">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-surface-dark via-transparent to-transparent z-10">
+                        </div>
+                        <div id="spotlightImage" class="absolute inset-0 bg-cover bg-center"
+                            style='background-image: url("https://placehold.co/600x400/1a1a1a/666?text=Loading...");'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sticky Filter Bar -->
+        <div
+            class="sticky top-24 z-40 mb-10 bg-surface-dark/90 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-2xl">
+            <div class="flex flex-col lg:flex-row gap-4 items-center">
+                <!-- Search -->
+                <div class="w-full lg:flex-1 relative">
+                    <span
+                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+                    <input id="agentSearch"
+                        class="w-full bg-background-dark/50 border-white/10 rounded-lg pl-12 pr-4 py-3 text-white focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-500"
+                        placeholder="Search by name, area, or specialty..." type="text" />
+                </div>
+                <!-- Filter Dropdowns -->
+                <div class="flex flex-wrap gap-3 w-full lg:w-auto">
+                    <select id="locationFilter"
+                        class="bg-background-dark/50 border border-white/10 px-4 py-3 rounded-lg text-sm font-medium text-white focus:ring-1 focus:ring-primary focus:border-primary">
+                        <option value="">All Locations</option>
+                        <option value="Colombo">Colombo</option>
+                        <option value="Gampaha">Gampaha</option>
+                        <option value="Kalutara">Kalutara</option>
+                        <option value="Kandy">Kandy</option>
+                        <option value="Matale">Matale</option>
+                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Matara">Matara</option>
+                        <option value="Hambantota">Hambantota</option>
+                        <option value="Jaffna">Jaffna</option>
+                        <option value="Kilinochchi">Kilinochchi</option>
+                        <option value="Mannar">Mannar</option>
+                        <option value="Vavuniya">Vavuniya</option>
+                        <option value="Mullaitivu">Mullaitivu</option>
+                        <option value="Batticaloa">Batticaloa</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Trincomalee">Trincomalee</option>
+                        <option value="Kurunegala">Kurunegala</option>
+                        <option value="Puttalam">Puttalam</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Polonnaruwa">Polonnaruwa</option>
+                        <option value="Badulla">Badulla</option>
+                        <option value="Monaragala">Monaragala</option>
+                        <option value="Ratnapura">Ratnapura</option>
+                        <option value="Kegalle">Kegalle</option>
+                    </select>
+                    <select id="specializationFilter"
+                        class="bg-background-dark/50 border border-white/10 px-4 py-3 rounded-lg text-sm font-medium text-white focus:ring-1 focus:ring-primary focus:border-primary">
+                        <option value="">All Specializations</option>
+                        <option value="Luxury Properties">Luxury Properties</option>
+                        <option value="Residential">Residential</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Land & Plots">Land & Plots</option>
+                        <option value="Apartments">Apartments</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Rental Properties">Rental Properties</option>
+                    </select>
+                    <!-- Reset Button -->
+                    <button onclick="resetFilters()"
+                        class="text-slate-400 hover:text-primary px-2 text-sm font-bold flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-base">restart_alt</span>
+                        Reset
+                    </button>
+                    <!-- Add Agent (Admin Only) -->
+                    <div id="adminControls" class="hidden">
+                        <a href="/admin-dashboard.html"
+                            class="flex items-center gap-2 bg-primary text-background-dark px-4 py-3 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
+                            <span class="material-symbols-outlined">add_circle</span>
+                            Manage Agents
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Header -->
+        <div class="flex justify-between items-end mb-8 px-2">
+            <div>
+                <h3 class="text-2xl font-bold text-white">Professional Directory</h3>
+                <p id="resultCount" class="text-slate-500">Loading agents...</p>
+            </div>
+            <div class="flex gap-1">
+                <button class="p-2 rounded-lg bg-surface-dark text-primary border border-white/10">
+                    <span class="material-symbols-outlined">grid_view</span>
+                </button>
+                <button class="p-2 rounded-lg text-slate-500 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">list</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Agent Grid -->
+        <div id="agentsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Loading -->
+            <div class="col-span-full text-center py-20 text-slate-500">
+                <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto mb-4">
+                </div>
+                Loading elite agents...
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-16 flex flex-col items-center gap-6">
+            <!-- Placeholder for pagination logic if implemented later -->
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:8080';
+        const grid = document.getElementById('agentsGrid');
+        const searchInput = document.getElementById('agentSearch');
+        const locationFilter = document.getElementById('locationFilter');
+        const specializationFilter = document.getElementById('specializationFilter');
+        const resultCount = document.getElementById('resultCount');
+        const adminControls = document.getElementById('adminControls');
+
+        let allAgents = [];
+
+        // Check Admin
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.role === 'ADMIN') {
+            adminControls.classList.remove('hidden');
+        }
+
+        // Spotlight population
+        function populateSpotlight(agents) {
+            if (agents.length === 0) return;
+
+            // Calculate score: experience + propertiesSold
+            const scored = agents.map(a => ({
+                ...a,
+                score: (a.experience || 0) + (a.propertiesSold || 0)
+            }));
+            scored.sort((a, b) => b.score - a.score);
+            const top = scored[0];
+
+            document.getElementById('spotlightName').textContent = top.name;
+            document.getElementById('spotlightBio').textContent = top.bio ||
+                `Specializing in ${top.specialization || 'premium properties'}. ${top.experience ? top.experience + ' years experience' : 'Seasoned professional'} with ${top.propertiesSold || 0} properties sold.`;
+
+            const imgUrl = top.profileImageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(top.name)}&size=600&background=11d661&color=fff`;
+            document.getElementById('spotlightImage').style.backgroundImage = `url('${imgUrl}')`;
+            document.getElementById('spotlightProfileBtn').href = `/agent-profile.html?id=${top.id}`;
+            document.getElementById('spotlightContactBtn').href = `/agent-profile.html?id=${top.id}`;
+        }
+
+        // Filter agents
+        function applyFilters() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const locationVal = locationFilter.value;
+            const specVal = specializationFilter.value;
+
+            let filtered = allAgents.filter(a => {
+                const matchSearch = !searchTerm ||
+                    (a.name && a.name.toLowerCase().includes(searchTerm)) ||
+                    (a.title && a.title.toLowerCase().includes(searchTerm)) ||
+                    (a.specialization && a.specialization.toLowerCase().includes(searchTerm));
+
+                const matchLocation = !locationVal || a.location === locationVal;
+                const matchSpec = !specVal || a.specialization === specVal;
+
+                return matchSearch && matchLocation && matchSpec;
+            });
+            renderAgents(filtered);
+        }
+
+        // Reset filters
+        function resetFilters() {
+            searchInput.value = '';
+            locationFilter.value = '';
+            specializationFilter.value = '';
+            renderAgents(allAgents);
+        }
+        window.resetFilters = resetFilters; // Make global for onclick
+
+        const renderAgents = (agents) => {
+            if (agents.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500 text-lg">No agents found matching criteria.</div>`;
+                resultCount.textContent = `Showing 0 agents`;
+                return;
+            }
+
+            resultCount.textContent = `Showing ${agents.length} elite agents ready to assist you`;
+
+            grid.innerHTML = agents.map(agent => {
+                const imageUrl = agent.profileImageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(agent.name)}&size=400&background=11d661&color=fff`;
+                const location = agent.location || 'All Regions';
+                const experience = agent.experience ? `${agent.experience} Years` : 'Experienced';
+                const specialization = agent.specialization || 'Residential';
+                const rating = agent.rating ? agent.rating.toFixed(1) : '5.0';
+                const isTop = (agent.experience || 0) + (agent.propertiesSold || 0) > 15;
+
+                return `
+                <div class="agent-card-hover group bg-surface-dark border border-white/10 rounded-xl overflow-hidden transition-all duration-300">
+                    <div class="relative h-64 overflow-hidden">
+                        <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+                             src="${imageUrl}" 
+                             loading="lazy"
+                             onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(agent.name)}&size=400&background=11d661&color=fff'"/>
+                        <div class="absolute top-4 left-4 flex flex-col gap-2">
+                             ${isTop ? `<span class="bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded-sm uppercase tracking-tighter">Top Agent</span>` : ''}
+                             <span class="bg-blue-500/90 text-white text-[10px] font-black px-2 py-1 rounded-sm uppercase tracking-tighter flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[12px] fill-1">verified</span> Verified
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-xl font-bold text-white leading-tight truncate">${agent.name}</h4>
+                            <div class="flex items-center text-primary font-bold gap-1">
+                                <span class="material-symbols-outlined text-sm fill-1">star</span>
+                                <span class="text-sm">${rating}</span>
+                            </div>
+                        </div>
+                        <p class="text-primary text-xs font-bold uppercase tracking-wider mb-4 truncate">${agent.title || 'Senior Agent'}</p>
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center gap-2 text-slate-400 text-sm">
+                                <span class="material-symbols-outlined text-lg">location_on</span>
+                                ${location}
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-400 text-sm">
+                                <span class="material-symbols-outlined text-lg">history</span>
+                                ${experience}
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-400 text-sm">
+                                <span class="material-symbols-outlined text-lg">home_work</span>
+                                ${specialization}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <a href="/agent-profile.html?id=${agent.id}" class="flex items-center justify-center bg-primary text-background-dark py-2.5 rounded-lg text-sm font-bold hover:bg-primary/80 transition-all">Profile</a>
+                            <button class="border border-primary/40 text-primary py-2.5 rounded-lg text-sm font-bold hover:bg-primary/10 transition-all">Message</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        };
+
+        async function loadAgents() {
+            try {
+                const response = await fetch(`${API_BASE}/api/agents/public`);
+                if (!response.ok) throw new Error('Failed to fetch');
+                allAgents = await response.json();
+                renderAgents(allAgents);
+                populateSpotlight(allAgents);
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = `<div class="col-span-full text-center text-red-500">Failed to load agents. Please try again later.</div>`;
+            }
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', applyFilters);
+        locationFilter.addEventListener('change', applyFilters);
+        specializationFilter.addEventListener('change', applyFilters);
+
+        loadAgents();
+    </script>
+</body>
+
+</html>

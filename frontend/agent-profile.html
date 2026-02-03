@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Agent Professional Profile | EstatePro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00ff80",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#0b0b0b",
+                        "surface-dark": "#161b18",
+                        "accent-dark": "#204b36",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .star-filled {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+        }
+
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+
+    <!-- Navbar Container -->
+    <div id="navbar"></div>
+
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-10 py-10">
+        <!-- Back Button -->
+        <a href="/agents.html"
+            class="inline-flex items-center gap-2 text-slate-400 hover:text-primary mb-6 group transition-colors">
+            <span
+                class="material-symbols-outlined text-xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            <span class="font-semibold">Back to Agents</span>
+        </a>
+
+        <div id="profileLoading" class="flex justify-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        </div>
+
+        <div id="profileContent" class="hidden flex flex-col lg:flex-row gap-10">
+            <!-- Sidebar Left -->
+            <aside class="w-full lg:w-1/3 flex flex-col gap-6">
+                <!-- Profile Image Card -->
+                <div class="relative group">
+                    <div
+                        class="aspect-[4/5] rounded-2xl overflow-hidden border-2 border-accent-dark bg-surface-dark shadow-2xl shadow-primary/5">
+                        <div id="agentImage"
+                            class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            style="background-image: url('')">
+                        </div>
+                    </div>
+                    <!-- Verified Badge -->
+                    <div
+                        class="absolute top-4 right-4 bg-primary text-background-dark px-3 py-1 rounded-full flex items-center gap-1 shadow-lg border border-white/20">
+                        <span class="material-symbols-outlined text-sm font-bold">verified</span>
+                        <span class="text-[10px] font-black uppercase tracking-wider">Verified</span>
+                    </div>
+                </div>
+                <!-- Social Actions Bar -->
+                <div
+                    class="bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-accent-dark rounded-2xl p-6">
+                    <h4
+                        class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4 px-2">
+                        Connect with <span id="agentFirstName">Agent</span></h4>
+                    <div class="flex justify-between items-center px-2">
+                        <a class="flex flex-col items-center gap-2 group" href="#">
+                            <div
+                                class="p-3 rounded-xl bg-slate-200 dark:bg-accent-dark/50 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                <span class="material-symbols-outlined">share</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">LinkedIn</span>
+                        </a>
+                        <a class="flex flex-col items-center gap-2 group" href="#">
+                            <div
+                                class="p-3 rounded-xl bg-slate-200 dark:bg-accent-dark/50 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                <span class="material-symbols-outlined">photo_camera</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Instagram</span>
+                        </a>
+                        <a class="flex flex-col items-center gap-2 group" href="#">
+                            <div
+                                class="p-3 rounded-xl bg-slate-200 dark:bg-accent-dark/50 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                <span class="material-symbols-outlined">public</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Website</span>
+                        </a>
+                        <a class="flex flex-col items-center gap-2 group" href="#">
+                            <div
+                                class="p-3 rounded-xl bg-slate-200 dark:bg-accent-dark/50 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                                <span class="material-symbols-outlined">alternate_email</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">X Corp</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- CV Button -->
+                <button
+                    class="w-full flex items-center justify-center gap-2 py-4 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined">description</span>
+                    View Professional CV
+                </button>
+            </aside>
+            <!-- Main Content Right -->
+            <div class="flex-1 flex flex-col gap-8">
+                <!-- Profile Header -->
+                <div
+                    class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-slate-200 dark:border-accent-dark pb-8">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <h1 id="agentName" class="text-4xl lg:text-5xl font-extrabold tracking-tight">Agent Name
+                            </h1>
+                        </div>
+                        <p id="agentTitle" class="text-lg text-slate-600 dark:text-primary font-medium mb-4">Real Estate
+                            Agent</p>
+                        <div
+                            class="flex items-center gap-2 bg-slate-100 dark:bg-accent-dark/30 w-fit px-3 py-1.5 rounded-lg border border-slate-200 dark:border-accent-dark/50">
+                            <div class="flex text-primary">
+                                <span class="material-symbols-outlined star-filled text-sm">star</span>
+                                <span class="material-symbols-outlined star-filled text-sm">star</span>
+                                <span class="material-symbols-outlined star-filled text-sm">star</span>
+                                <span class="material-symbols-outlined star-filled text-sm">star</span>
+                                <span class="material-symbols-outlined star-filled text-sm">star</span>
+                            </div>
+                            <span class="text-sm font-bold">5.0</span>
+                            <span class="text-sm text-slate-500">(Verified Reviews)</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3 w-full md:w-auto">
+                        <button onclick="document.getElementById('contactModal').classList.remove('hidden')"
+                            class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-slate-200 dark:bg-surface-dark px-8 py-3 rounded-xl font-bold hover:bg-slate-300 dark:hover:bg-surface-dark/50 transition-colors">
+                            <span class="material-symbols-outlined text-xl">mail</span>
+                            Message
+                        </button>
+                        <button onclick="document.getElementById('contactModal').classList.remove('hidden')"
+                            class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-primary text-background-dark px-8 py-3 rounded-xl font-black shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
+                            <span class="material-symbols-outlined text-xl">calendar_month</span>
+                            Book a Visit
+                        </button>
+                    </div>
+                </div>
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div
+                        class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-accent-dark p-6 rounded-2xl flex flex-col items-center text-center group hover:border-primary/50 transition-colors">
+                        <span
+                            class="text-slate-400 dark:text-slate-500 font-bold text-xs uppercase tracking-widest mb-2">Properties
+                            Sold</span>
+                        <span id="statPropertiesSold"
+                            class="text-4xl font-black text-slate-900 dark:text-white group-hover:text-primary transition-colors">--</span>
+                        <div class="mt-4 h-1 w-8 bg-primary/20 rounded-full"></div>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-accent-dark p-6 rounded-2xl flex flex-col items-center text-center group hover:border-primary/50 transition-colors">
+                        <span
+                            class="text-slate-400 dark:text-slate-500 font-bold text-xs uppercase tracking-widest mb-2">Agent
+                            Rating</span>
+                        <span id="statRating"
+                            class="text-4xl font-black text-slate-900 dark:text-white group-hover:text-primary transition-colors">5.0</span>
+                        <div class="mt-4 h-1 w-8 bg-primary/20 rounded-full"></div>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-accent-dark p-6 rounded-2xl flex flex-col items-center text-center group hover:border-primary/50 transition-colors">
+                        <span
+                            class="text-slate-400 dark:text-slate-500 font-bold text-xs uppercase tracking-widest mb-2">Experience</span>
+                        <span id="statExperience"
+                            class="text-4xl font-black text-slate-900 dark:text-white group-hover:text-primary transition-colors">--</span>
+                        <div class="mt-4 h-1 w-8 bg-primary/20 rounded-full"></div>
+                    </div>
+                </div>
+                <!-- About Section -->
+                <section>
+                    <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                        <span class="w-1.5 h-6 bg-primary rounded-full"></span>
+                        About <span id="agentAboutName">Agent</span>
+                    </h2>
+                    <div
+                        class="bg-slate-100 dark:bg-surface-dark/50 p-6 lg:p-8 rounded-2xl border border-slate-200 dark:border-accent-dark/30">
+                        <p id="agentBio" class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4 text-lg">
+                            Bio loading...
+                        </p>
+                    </div>
+                </section>
+                <!-- Property Grid -->
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-primary rounded-full"></span>
+                            Managed Listings
+                        </h2>
+                        <a class="text-sm font-bold text-primary hover:underline underline-offset-4" href="#">View
+                            all</a>
+                    </div>
+                    <!-- Managed Properties Grid -->
+                    <div id="managedListingsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div
+                            class="col-span-full text-slate-500 text-center py-8 bg-surface-dark rounded-xl border border-white/5">
+                            Loading listings...
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Overlay -->
+    <div id="contactModal" class="hidden fixed inset-0 modal-backdrop z-[100] flex items-center justify-center p-4">
+        <div
+            class="bg-background-dark border border-white/10 w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row relative">
+            <!-- Close Button -->
+            <button onclick="document.getElementById('contactModal').classList.add('hidden')"
+                class="absolute top-4 right-4 text-white/40 hover:text-white transition-colors z-50">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <!-- Left Column: Quick Contact Form -->
+            <div class="flex-1 p-8 lg:p-12 border-r border-white/5">
+                <header class="mb-8">
+                    <h2
+                        class="text-white text-2xl lg:text-3xl font-bold leading-tight tracking-[-0.015em] mb-2 font-display">
+                        Get in Touch <span class="text-primary" id="modalAgentName"></span></h2>
+                    <p class="text-white/60 text-sm">Fill out the form below and we will reach out to you shortly.</p>
+                </header>
+                <form class="space-y-6"
+                    onsubmit="event.preventDefault(); alert('Inquiry sent!'); document.getElementById('contactModal').classList.add('hidden');">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <label class="flex flex-col gap-2">
+                            <span class="text-white text-sm font-medium">Full Name</span>
+                            <input
+                                class="form-input w-full rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-white/10 bg-white/5 focus:border-primary h-12 placeholder:text-white/20 px-4 text-base font-normal"
+                                placeholder="e.g. John Doe" type="text" />
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-white text-sm font-medium">Email Address</span>
+                            <input
+                                class="form-input w-full rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-white/10 bg-white/5 focus:border-primary h-12 placeholder:text-white/20 px-4 text-base font-normal"
+                                placeholder="john@example.com" type="email" />
+                        </label>
+                    </div>
+                    <label class="flex flex-col gap-2">
+                        <span class="text-white text-sm font-medium">Subject</span>
+                        <select
+                            class="form-select w-full rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-white/10 bg-white/5 focus:border-primary h-12 px-4 text-base font-normal">
+                            <option class="bg-background-dark">Property Inquiry</option>
+                            <option class="bg-background-dark">Schedule a Viewing</option>
+                            <option class="bg-background-dark">Selling My Home</option>
+                            <option class="bg-background-dark">Other</option>
+                        </select>
+                    </label>
+                    <label class="flex flex-col gap-2">
+                        <span class="text-white text-sm font-medium">Message</span>
+                        <textarea
+                            class="form-input w-full rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-white/10 bg-white/5 focus:border-primary min-h-[140px] placeholder:text-white/20 p-4 text-base font-normal"
+                            placeholder="I'm interested in viewing your listings..."></textarea>
+                    </label>
+                    <button
+                        class="w-full h-14 bg-primary hover:bg-primary/90 text-[#0f241a] font-bold rounded-lg transition-all flex items-center justify-center gap-2 text-lg shadow-[0_0_20px_rgba(0,255,128,0.2)]"
+                        type="submit">
+                        <span>Send Inquiry</span>
+                        <span class="material-symbols-outlined">send</span>
+                    </button>
+                </form>
+            </div>
+            <!-- Right Column: Engagement Hub -->
+            <div class="w-full md:w-[380px] bg-white/[0.02] p-8 flex flex-col gap-8">
+                <!-- Agent Availability -->
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+                    <div class="relative">
+                        <div id="modalAgentImage"
+                            class="size-14 rounded-full bg-cover bg-center border-2 border-primary/20"
+                            style="background-image: url('')"></div>
+                        <div
+                            class="absolute bottom-0 right-0 size-3 bg-primary rounded-full border-2 border-background-dark status-pulse">
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold leading-none" id="modalAgentNameDisplay">Agent Name</h4>
+                        <p class="text-primary text-xs font-semibold mt-1 uppercase tracking-wider">Online Now</p>
+                        <p class="text-white/40 text-[10px] mt-1 italic">Typically responds in 15m</p>
+                    </div>
+                </div>
+                <!-- Mini Calendar Picker (Static) -->
+                <div class="space-y-4 flex-1">
+                    <h3 class="text-white font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-xl">calendar_month</span>
+                        Book a Visit
+                    </h3>
+                    <div class="bg-white/5 rounded-lg border border-white/5 p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-white text-xs font-semibold">February 2026</span>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 text-center mb-1">
+                            <div class="text-[10px] font-bold text-white/30">M</div>
+                            <div class="text-[10px] font-bold text-white/30">T</div>
+                            <div class="text-[10px] font-bold text-white/30">W</div>
+                            <div class="text-[10px] font-bold text-white/30">T</div>
+                            <div class="text-[10px] font-bold text-white/30">F</div>
+                            <div class="text-[10px] font-bold text-white/30">S</div>
+                            <div class="text-[10px] font-bold text-white/30">S</div>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 text-xs text-white">
+                            <!-- Simple static grid for visual -->
+                            <div class="text-white/20 p-1">26</div>
+                            <div class="text-white/20 p-1">27</div>
+                            <div class="text-white/20 p-1">28</div>
+                            <div class="text-white/20 p-1">29</div>
+                            <div class="text-white/20 p-1">30</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">1</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">2</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">3</div>
+                            <div class="bg-primary text-black rounded font-bold p-1 cursor-pointer">4</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">5</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">6</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">7</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">8</div>
+                            <div class="p-1 hover:bg-white/10 rounded cursor-pointer">9</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:8080';
+
+        async function loadAgentDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const agentId = params.get('id');
+
+            if (!agentId) {
+                alert('No agent ID provided');
+                window.location.href = '/agents.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/agents/public`);
+                if (!response.ok) throw new Error('Failed to fetch agents');
+                const agents = await response.json();
+                const agent = agents.find(a => a.id == agentId);
+
+                if (!agent) throw new Error('Agent not found');
+
+                // Populate Data
+                document.getElementById('agentName').textContent = agent.name;
+                document.getElementById('agentFirstName').textContent = agent.name.split(' ')[0];
+                document.getElementById('agentAboutName').textContent = agent.name.split(' ')[0];
+                document.getElementById('agentTitle').textContent = agent.title || agent.specialization || 'Real Estate Agent';
+
+                const imageUrl = agent.profileImageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(agent.name)}&size=400&background=11d661&color=fff`;
+                document.getElementById('agentImage').style.backgroundImage = `url('${imageUrl}')`;
+
+                document.getElementById('agentBio').textContent = agent.bio || `Experienced ${agent.specialization || 'Real Estate'} professional dedicated to providing top-tier service. With a focus on client satisfaction and deep market knowledge, ${agent.name} helps clients navigate the complex real estate landscape with ease.`;
+
+                // Populate Stats from Admin Data
+                const propertiesSold = agent.propertiesSold !== null && agent.propertiesSold !== undefined ? agent.propertiesSold : '--';
+                const experience = agent.experience !== null && agent.experience !== undefined ? `${agent.experience}Y+` : '--';
+                const rating = agent.rating !== null && agent.rating !== undefined ? agent.rating.toFixed(1) : '5.0';
+
+                document.getElementById('statPropertiesSold').textContent = propertiesSold;
+                document.getElementById('statExperience').textContent = experience;
+                document.getElementById('statRating').textContent = rating;
+
+                // Update Modal
+                document.getElementById('modalAgentName').textContent = `with ${agent.name}`;
+                document.getElementById('modalAgentNameDisplay').textContent = agent.name;
+                document.getElementById('modalAgentImage').style.backgroundImage = `url('${imageUrl}')`;
+
+                document.getElementById('profileLoading').classList.add('hidden');
+                document.getElementById('profileContent').classList.remove('hidden');
+
+                // Fetch managed listings
+                loadManagedListings(agentId);
+
+            } catch (error) {
+                console.error(error);
+                alert('Error loading agent details.');
+            }
+        }
+
+        async function loadManagedListings(agentId) {
+            const listingsContainer = document.getElementById('managedListingsContainer');
+            try {
+                // Fetch all properties and filter by assignedAgent
+                const response = await fetch(`${API_BASE}/api/properties`);
+                if (!response.ok) return;
+                const properties = await response.json();
+                const managedProperties = properties.filter(p => p.assignedAgent && p.assignedAgent.id == agentId);
+
+                if (managedProperties.length === 0) {
+                    listingsContainer.innerHTML = `<div class="text-slate-500 text-center py-8 bg-surface-dark rounded-xl border border-white/5">No active listings at the moment.</div>`;
+                    return;
+                }
+
+                listingsContainer.innerHTML = managedProperties.slice(0, 6).map(property => {
+                    const imgUrl = property.imageUrl || 'https://placehold.co/400x300/1a1a1a/666?text=No+Image';
+                    const bedrooms = property.bedrooms || 0;
+                    const bathrooms = property.bathrooms || 0;
+                    return `
+                    <a href="/view-property.html?id=${property.id}" class="block group">
+                        <div class="bg-surface-dark border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                            <div class="h-48 md:h-52 bg-cover bg-center relative" style="background-image: url('${imgUrl}')">
+                                <div class="absolute top-3 left-3">
+                                    <span class="px-3 py-1 bg-primary/90 text-white text-xs font-bold rounded-full uppercase tracking-wide">
+                                        ${property.status === 'AVAILABLE' ? 'Active' : property.status}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h4 class="font-bold text-white text-lg truncate group-hover:text-primary transition-colors">${property.title}</h4>
+                                <p class="text-primary font-bold text-xl mt-2">LKR ${property.price?.toLocaleString() || 'N/A'}</p>
+                                <p class="text-slate-400 text-sm truncate mt-1 flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    ${property.address || 'N/A'}
+                                </p>
+                                <div class="flex items-center gap-4 mt-3 pt-3 border-t border-white/10">
+                                    <span class="flex items-center gap-1.5 text-slate-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                                        </svg>
+                                        ${bedrooms} Bed
+                                    </span>
+                                    <span class="flex items-center gap-1.5 text-slate-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                                        </svg>
+                                        ${bathrooms} Bath
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Error loading managed listings:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadAgentDetails);
+    </script>
+</body>
+
+</html>

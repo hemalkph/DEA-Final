@@ -7,227 +7,678 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <title>Real Estate - Find Your Dream Home</title>
 </head>
 
 <body class="bg-surface font-sans antialiased text-gray-200 overflow-x-hidden selection:bg-primary/30">
-    <div id="navbar"></div>
+    <!-- GLOBAL FIXED BACKGROUND -->
+    <div class="fixed inset-0 z-0">
+        <!-- Real Background Image -->
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline poster="images/background.jpg" id="heroBg"
+            class="absolute inset-0 w-full h-full object-cover will-change-transform z-0">
+            <source src="images/grass.webm" type="video/webm">
+            <!-- Fallback for older browsers -->
+            <img src="images/background.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover">
+        </video>
 
-    <!-- Hero Section -->
-    <div class="relative min-h-screen flex items-center justify-center overflow-hidden bg-surface">
-        <!-- Background with Overlay -->
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-br from-surface via-surface to-dark-card z-10"></div>
-            <div class="absolute inset-0 opacity-20">
-                <div class="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <!-- Gradient Overlay - Gradient to transparent at bottom to reveal image -->
+        <div id="heroOverlay"
+            class="absolute inset-0 bg-gradient-to-b from-surface/80 via-surface/60 to-surface/90 z-10"></div>
+
+        <!-- Blobs -->
+        <div class="absolute inset-0 opacity-15 z-10 pointer-events-none">
+            <div
+                class="absolute top-1/4 left-1/4 w-80 h-80 bg-primary/30 rounded-full blur-3xl mix-blend-screen animate-pulse">
+            </div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl mix-blend-screen">
             </div>
         </div>
+    </div>
 
-        <!-- content -->
-        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
-            <div class="animate-float">
+    <!-- CONTENT WRAPPER (z-10 to stay above background) -->
+    <div class="relative z-10">
+        <div id="navbar"></div>
+
+        <!-- ============================================
+             SECTION 1: HERO & SEARCH (Stitch Screen 1)
+             ============================================ -->
+        <header id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <div id="heroContent" class="relative z-20 max-w-5xl mx-auto px-6 text-center">
+                <!-- Badge -->
                 <span
-                    class="inline-block py-2 px-4 rounded-full bg-dark-card border border-dark-border text-gray-400 text-sm font-medium mb-6">
+                    class="inline-block py-2 px-5 rounded-full bg-dark-card/60 backdrop-blur-md border border-dark-border/50 text-gray-400 text-sm font-medium mb-8 tracking-wide">
                     The #1 Real Estate Platform
                 </span>
+
+                <!-- Main Headline -->
+                <h1
+                    class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-extrabold text-white tracking-tight leading-[1.05] mb-6">
+                    Find Your <span class="text-primary">Dream Space</span>
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Discover exclusive, verified listings curated for luxury and comfort. Your journey to the perfect
+                    home starts with elite properties.
+                </p>
+
+                <!-- Trust Badges -->
+                <div class="flex flex-wrap justify-center gap-6 md:gap-10">
+                    <div class="flex items-center gap-3 hero-badge">
+                        <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-primary">verified</span>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-white font-semibold">Verified Listings</div>
+                            <div class="text-xs text-gray-500">100% Secure sources</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 hero-badge">
+                        <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-primary">support_agent</span>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-white font-semibold">Expert Support</div>
+                            <div class="text-xs text-gray-500">24/7 Personal assistance</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 hero-badge">
+                        <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-primary">emoji_events</span>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-white font-semibold">Award-winning</div>
+                            <div class="text-xs text-gray-500">Top rated agents 2024</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-8 tracking-tight leading-tight">
-                A Simple Path To <br>
-                <span class="text-primary">Dream Home</span>
-            </h1>
-
-            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400 mb-10 leading-relaxed">
-                Find your next dream home with our extensive list of properties. From modern apartments to luxury
-                villas.
-            </p>
-
-            <!-- Email Input + CTA -->
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-xl mx-auto mb-16">
-                <input type="email" placeholder="Enter Your Email Here"
-                    class="input-field flex-grow text-center sm:text-left">
-                <button class="btn-primary whitespace-nowrap">
-                    Sign Up
-                </button>
-            </div>
-
-            <!-- Dashboard Preview Card -->
-            <div class="relative mx-auto max-w-5xl">
-                <div class="glass rounded-2xl p-4 shadow-2xl border border-dark-border">
-                    <img src="https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                        alt="Dashboard Preview" class="rounded-lg w-full shadow-inner">
+            <!-- Scroll Hint -->
+            <div class="absolute bottom-8 inset-x-0 flex justify-center z-20 pointer-events-none">
+                <div class="text-gray-400 text-xs uppercase tracking-widest animate-bounce font-medium">
+                    Scroll Down
                 </div>
             </div>
-        </div>
-    </div>
+        </header>
 
-    <!-- Testimonial Marquee Section -->
-    <div class="py-20 bg-surface overflow-hidden">
-        <div class="text-center mb-12">
-            <span class="text-primary text-sm font-semibold uppercase tracking-wider">Testimonials</span>
-            <h2 class="text-3xl font-bold text-white mt-2">What Our Clients Say</h2>
-        </div>
-
-        <div class="relative w-full max-w-full overflow-hidden">
-            <div class="flex animate-marquee space-x-6 w-max px-4">
-                <!-- Testimonial Card 1 -->
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">Sarah Johnson</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"I found my dream apartment in less than a week! The platform is so
-                        easy to use."</p>
-                </div>
-                <!-- Testimonial Card 2 -->
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">Michael Chen</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"Professional agents and premium listings. Highly recommended for
-                        first-time buyers."</p>
-                </div>
-                <!-- Testimonial Card 3 -->
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">Emily Davis</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"The virtual tours helped us decide on our vacation home without
-                        traveling. Amazing tech!"</p>
-                </div>
-                <!-- Testimonial Card 4 -->
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">David Wilson</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"Sold my property in 2 days. The exposure this platform gives is
-                        unmatched."</p>
-                </div>
-                <!-- Duplicate cards for seamless loop -->
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">Sarah Johnson</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"I found my dream apartment in less than a week! The platform is so
-                        easy to use."</p>
-                </div>
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">Michael Chen</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"Professional agents and premium listings. Highly recommended for
-                        first-time buyers."</p>
-                </div>
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">Emily Davis</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"The virtual tours helped us decide on our vacation home without
-                        traveling. Amazing tech!"</p>
-                </div>
-                <div
-                    class="glass p-6 rounded-2xl w-80 flex-shrink-0 border border-dark-border hover:border-primary/50 transition-colors">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User"
-                            class="w-12 h-12 rounded-full border-2 border-primary/30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-white">David Wilson</h4>
-                            <div class="flex text-primary text-xs">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">"Sold my property in 2 days. The exposure this platform gives is
-                        unmatched."</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Management Demo CTA -->
-    <div class="py-20 relative bg-dark-card text-white overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div
-                class="glass rounded-3xl p-8 md:p-16 border border-dark-border flex flex-col md:flex-row items-center justify-between">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">For Agents</span>
-                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">Property Management Made Simple</h2>
-                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                        Are you an agent or property owner? Experience our powerful dashboard to manage listings, track
-                        inquiries, and close deals faster.
+        <!-- ============================================
+             SECTION 2: FEATURED LISTINGS (Stitch Screen 2)
+             ============================================ -->
+        <section class="py-24 backdrop-blur-sm bg-surface/90 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">Featured Properties</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Featured Listings & Categories</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Discover hand-picked properties from our most sought-after neighborhoods. From urban studios to
+                        luxury villas.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="btn-primary">
-                            Request Live Demo
-                        </button>
-                        <a href="#" class="btn-secondary flex items-center justify-center">
-                            <span>Watch Video</span>
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </a>
+                </div>
+
+                <!-- Property Grid -->
+                <div id="featuredListings" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-stagger">
+                    <!-- Dynamic content loaded via JS -->
+                    <div class="featured-card glass rounded-2xl overflow-hidden group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Property"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 bg-primary text-black text-xs font-bold rounded-full">Featured</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span
+                                    class="px-3 py-1 bg-dark-card/80 backdrop-blur text-white text-xs font-medium rounded-full">For
+                                    Sale</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Skyline View Penthouse</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex items-center gap-1">
+                                <span class="material-icons-outlined text-base">location_on</span>
+                                Downtown, City Center
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary">$1,250,000</span>
+                                <div class="flex gap-4 text-gray-500 text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bed</span> 4</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bathtub</span> 3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card glass rounded-2xl overflow-hidden group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Property"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 bg-primary text-black text-xs font-bold rounded-full">Featured</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span
+                                    class="px-3 py-1 bg-dark-card/80 backdrop-blur text-white text-xs font-medium rounded-full">For
+                                    Sale</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Oak Ridge Manor</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex items-center gap-1">
+                                <span class="material-icons-outlined text-base">location_on</span>
+                                Suburban Hills
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary">$890,000</span>
+                                <div class="flex gap-4 text-gray-500 text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bed</span> 5</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bathtub</span> 4</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card glass rounded-2xl overflow-hidden group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Property"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 bg-primary text-black text-xs font-bold rounded-full">Featured</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span
+                                    class="px-3 py-1 bg-dark-card/80 backdrop-blur text-white text-xs font-medium rounded-full">For
+                                    Rent</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Industrial Loft Studio</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex items-center gap-1">
+                                <span class="material-icons-outlined text-base">location_on</span>
+                                Arts District
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary">$3,500/mo</span>
+                                <div class="flex gap-4 text-gray-500 text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bed</span> 2</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bathtub</span> 1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card glass rounded-2xl overflow-hidden group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600" alt="Property"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 bg-primary text-black text-xs font-bold rounded-full">Featured</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span
+                                    class="px-3 py-1 bg-dark-card/80 backdrop-blur text-white text-xs font-medium rounded-full">For
+                                    Sale</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Contemporary Family Estate</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex items-center gap-1">
+                                <span class="material-icons-outlined text-base">location_on</span>
+                                Green Valley
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary">$1,450,000</span>
+                                <div class="flex gap-4 text-gray-500 text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bed</span> 6</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bathtub</span> 5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card glass rounded-2xl overflow-hidden group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600" alt="Property"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 bg-primary text-black text-xs font-bold rounded-full">Featured</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span
+                                    class="px-3 py-1 bg-dark-card/80 backdrop-blur text-white text-xs font-medium rounded-full">For
+                                    Sale</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Ocean Breeze Villa</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex items-center gap-1">
+                                <span class="material-icons-outlined text-base">location_on</span>
+                                Coastal Paradise
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary">$2,800,000</span>
+                                <div class="flex gap-4 text-gray-500 text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bed</span> 5</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">bathtub</span> 4</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card glass rounded-2xl overflow-hidden group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Property"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">Commercial</span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span
+                                    class="px-3 py-1 bg-dark-card/80 backdrop-blur text-white text-xs font-medium rounded-full">For
+                                    Rent</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Tech-Hub Office Suite</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex items-center gap-1">
+                                <span class="material-icons-outlined text-base">location_on</span>
+                                Business District
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary">$8,500/mo</span>
+                                <div class="flex gap-4 text-gray-500 text-sm">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-icons-outlined text-base">square_foot</span> 2500
+                                        sqft</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="md:w-5/12">
+
+                <!-- View All Button -->
+                <div class="text-center mt-12 reveal">
+                    <a href="/properties.html" class="btn-primary inline-flex items-center gap-2">
+                        View All Properties
+                        <span class="material-icons-outlined">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 3: HOW IT WORKS (Stitch Screen 3)
+             ============================================ -->
+        <section class="py-24 bg-dark-card/50 backdrop-blur-sm border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">Simple Process</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">How It Works</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Our streamlined approach ensures you find your dream home with zero friction and total
+                        transparency.
+                    </p>
+                </div>
+
+                <!-- Process Steps -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-stagger">
                     <div
-                        class="relative rounded-2xl overflow-hidden shadow-2xl border border-dark-border transform rotate-1 hover:rotate-0 transition-transform duration-500">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Dashboard Preview" class="w-full">
-                        <div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+                        class="process-step glass rounded-2xl p-8 text-center group hover:border-primary/50 transition-all duration-300">
+                        <div
+                            class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                            <span class="material-icons-outlined text-4xl text-primary">search</span>
+                        </div>
+                        <div class="text-primary text-sm font-bold mb-2">Step 1</div>
+                        <h3 class="text-xl font-bold text-white mb-3">Browse Listings</h3>
+                        <p class="text-gray-400 text-sm">
+                            Explore our curated collection of luxury properties in prime locations.
+                        </p>
+                    </div>
+
+                    <div
+                        class="process-step glass rounded-2xl p-8 text-center group hover:border-primary/50 transition-all duration-300">
+                        <div
+                            class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                            <span class="material-icons-outlined text-4xl text-primary">contact_phone</span>
+                        </div>
+                        <div class="text-primary text-sm font-bold mb-2">Step 2</div>
+                        <h3 class="text-xl font-bold text-white mb-3">Contact Agent</h3>
+                        <p class="text-gray-400 text-sm">
+                            Get a direct line to our local experts who know the market inside out.
+                        </p>
+                    </div>
+
+                    <div
+                        class="process-step glass rounded-2xl p-8 text-center group hover:border-primary/50 transition-all duration-300">
+                        <div
+                            class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                            <span class="material-icons-outlined text-4xl text-primary">home</span>
+                        </div>
+                        <div class="text-primary text-sm font-bold mb-2">Step 3</div>
+                        <h3 class="text-xl font-bold text-white mb-3">Visit Property</h3>
+                        <p class="text-gray-400 text-sm">
+                            Schedule your physical tour and get a real feel for your future home.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 4: WHY CHOOSE US (Stitch Screen 3)
+             ============================================ -->
+        <section class="py-24 backdrop-blur-sm bg-surface/90 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">Our Advantages</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Why Choose Us</h2>
+                </div>
+
+                <!-- Benefits Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-stagger">
+                    <div
+                        class="benefit-card glass rounded-2xl p-6 border border-dark-border hover:border-primary/50 transition-all duration-300">
+                        <div class="w-14 h-14 mb-5 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-2xl text-primary">verified_user</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Verified Listings</h3>
+                        <p class="text-gray-400 text-sm">100% authenticity guaranteed through rigorous field checks.</p>
+                    </div>
+
+                    <div
+                        class="benefit-card glass rounded-2xl p-6 border border-dark-border hover:border-primary/50 transition-all duration-300">
+                        <div class="w-14 h-14 mb-5 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-2xl text-primary">visibility</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Transparent Process</h3>
+                        <p class="text-gray-400 text-sm">No hidden fees, no surprises. Just clear, legal documentation.
+                        </p>
+                    </div>
+
+                    <div
+                        class="benefit-card glass rounded-2xl p-6 border border-dark-border hover:border-primary/50 transition-all duration-300">
+                        <div class="w-14 h-14 mb-5 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-2xl text-primary">people</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Trusted Agents</h3>
+                        <p class="text-gray-400 text-sm">Elite professionals with vetted backgrounds and track records.
+                        </p>
+                    </div>
+
+                    <div
+                        class="benefit-card glass rounded-2xl p-6 border border-dark-border hover:border-primary/50 transition-all duration-300">
+                        <div class="w-14 h-14 mb-5 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <span class="material-icons-outlined text-2xl text-primary">lock</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Secure Inquiries</h3>
+                        <p class="text-gray-400 text-sm">Advanced encryption for all your personal data and inquiries.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 5: MEET OUR AGENTS (Stitch Screen 3)
+             ============================================ -->
+        <section class="py-24 bg-dark-card/50 backdrop-blur-sm border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">Expert Team</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Meet Our Elite Agents</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Top performers dedicated to finding your perfect space.
+                    </p>
+                </div>
+
+                <!-- Agents Grid (Dynamically loaded) -->
+                <div id="homeAgentsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-stagger">
+                    <!-- Loading State -->
+                    <div class="agent-preview-card glass rounded-2xl p-6 text-center animate-pulse">
+                        <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gray-700"></div>
+                        <div class="h-6 bg-gray-700 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-700 rounded w-1/2 mx-auto mb-4"></div>
+                    </div>
+                    <div class="agent-preview-card glass rounded-2xl p-6 text-center animate-pulse">
+                        <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gray-700"></div>
+                        <div class="h-6 bg-gray-700 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-700 rounded w-1/2 mx-auto mb-4"></div>
+                    </div>
+                    <div class="agent-preview-card glass rounded-2xl p-6 text-center animate-pulse">
+                        <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gray-700"></div>
+                        <div class="h-6 bg-gray-700 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-700 rounded w-1/2 mx-auto mb-4"></div>
+                    </div>
+                </div>
+
+                <!-- View All Agents Button -->
+                <div class="text-center mt-12 reveal">
+                    <a href="/agents.html" class="btn-secondary inline-flex items-center gap-2">
+                        View All Agents
+                        <span class="material-icons-outlined">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 6: TESTIMONIALS (Stitch Screen 4)
+             ============================================ -->
+        <section class="py-24 backdrop-blur-sm bg-surface/90 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">Testimonials</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Trusted by Clients Across the
+                        Country</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Don't just take our word for it. Join thousands of homeowners who found their perfect match.
+                    </p>
+                </div>
+
+                <!-- Testimonial Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-stagger">
+                    <div class="glass rounded-2xl p-8 border border-dark-border hover:border-primary/30 transition-all">
+                        <div class="flex items-center mb-6">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client"
+                                class="w-14 h-14 rounded-full border-2 border-primary/30">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-white">Sarah Jenkins</h4>
+                                <p class="text-gray-500 text-sm">San Francisco, CA</p>
+                            </div>
+                        </div>
+                        <div class="text-yellow-400 text-sm mb-4">★★★★★</div>
+                        <p class="text-gray-400 leading-relaxed">
+                            "The easiest home buying experience I've ever had. The process was seamless and professional
+                            from the first click to closing."
+                        </p>
+                    </div>
+
+                    <div class="glass rounded-2xl p-8 border border-dark-border hover:border-primary/30 transition-all">
+                        <div class="flex items-center mb-6">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client"
+                                class="w-14 h-14 rounded-full border-2 border-primary/30">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-white">Marcus Thompson</h4>
+                                <p class="text-gray-500 text-sm">Austin, TX</p>
+                            </div>
+                        </div>
+                        <div class="text-yellow-400 text-sm mb-4">★★★★★</div>
+                        <p class="text-gray-400 leading-relaxed">
+                            "Highly recommend for anyone looking for a modern approach to real estate. The data
+                            transparency and user interface are miles ahead."
+                        </p>
+                    </div>
+
+                    <div class="glass rounded-2xl p-8 border border-dark-border hover:border-primary/30 transition-all">
+                        <div class="flex items-center mb-6">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client"
+                                class="w-14 h-14 rounded-full border-2 border-primary/30">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-white">Elena Rodriguez</h4>
+                                <p class="text-gray-500 text-sm">Miami, FL</p>
+                            </div>
+                        </div>
+                        <div class="text-yellow-400 text-sm mb-4">★★★★★</div>
+                        <p class="text-gray-400 leading-relaxed">
+                            "Found my dream home in record time. The platform is incredibly intuitive and fast. Support
+                            was there every step of the way!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 7: CTA BANNER (Stitch Screen 4)
+             ============================================ -->
+        <section class="py-24 bg-dark-card/80 backdrop-blur-md border-t border-white/5">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+                <!-- CTA Content -->
+                <div class="glass rounded-3xl p-12 md:p-16 border border-primary/30 relative overflow-hidden">
+                    <!-- Background Glow -->
+                    <div class="absolute inset-0 opacity-20">
+                        <div
+                            class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary rounded-full blur-3xl">
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Ready to Find Your Next Home?</h2>
+                        <p class="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+                            Join over 5,000+ happy homeowners today. Your spring start begins here.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="/properties.html"
+                                class="btn-primary inline-flex items-center justify-center gap-2">
+                                <span class="material-icons-outlined">search</span>
+                                Browse Properties
+                            </a>
+                            <a href="/sell-property.html"
+                                class="btn-secondary inline-flex items-center justify-center gap-2">
+                                <span class="material-icons-outlined">add_home</span>
+                                List Your Property
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div id="footer"></div>
     </div>
 
     <script type="module" src="/src/main.js"></script>
+
+    <!-- Load Top Agents for Home Page -->
+    <script>
+        (function () {
+            const API_BASE = 'http://localhost:8080';
+            const agentsGrid = document.getElementById('homeAgentsGrid');
+
+            if (!agentsGrid) return;
+
+            async function loadTopAgents() {
+                try {
+                    const response = await fetch(`${API_BASE}/api/agents/public`);
+                    if (!response.ok) throw new Error('Failed to fetch agents');
+                    const agents = await response.json();
+
+                    // Score agents by experience + propertiesSold (higher = better)
+                    const scoredAgents = agents.map(agent => ({
+                        ...agent,
+                        score: (agent.experience || 0) + (agent.propertiesSold || 0) + (agent.rating || 0) * 2
+                    }));
+
+                    // Sort by score descending and take top 3
+                    scoredAgents.sort((a, b) => b.score - a.score);
+                    const topAgents = scoredAgents.slice(0, 3);
+
+                    if (topAgents.length === 0) {
+                        agentsGrid.innerHTML = `
+                            <div class="col-span-full text-center py-10 text-gray-400">
+                                No agents available at the moment.
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    // Render top agents
+                    agentsGrid.innerHTML = topAgents.map((agent, index) => {
+                        const imageUrl = agent.profileImageUrl ||
+                            `https://ui-avatars.com/api/?name=${encodeURIComponent(agent.name)}&size=400&background=11d661&color=fff`;
+                        const rating = agent.rating ? agent.rating.toFixed(1) : '5.0';
+                        const stars = '★'.repeat(Math.round(agent.rating || 5)) + '☆'.repeat(5 - Math.round(agent.rating || 5));
+                        const specialization = agent.specialization || agent.title || 'Real Estate Specialist';
+                        const isTopAgent = index === 0;
+
+                        return `
+                            <div class="agent-preview-card glass rounded-2xl p-6 text-center group hover:border-primary/50 transition-all duration-300">
+                                <div class="relative w-32 h-32 mx-auto mb-6">
+                                    <img src="${imageUrl}" alt="${agent.name}"
+                                        class="w-full h-full rounded-full object-cover border-4 border-primary/30 group-hover:border-primary transition-colors"
+                                        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(agent.name)}&size=400&background=11d661&color=fff'">
+                                    ${isTopAgent ? `
+                                        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-black text-xs font-bold rounded-full">
+                                            Top Agent
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-1">${agent.name}</h3>
+                                <p class="text-primary text-sm mb-2">${specialization}</p>
+                                <div class="text-gray-500 text-xs mb-3">
+                                    ${agent.experience ? agent.experience + ' yrs exp' : ''} 
+                                    ${agent.propertiesSold ? '• ' + agent.propertiesSold + ' sold' : ''}
+                                </div>
+                                <div class="flex justify-center gap-1 text-yellow-400 text-sm mb-4">${stars}</div>
+                                <a href="/agent-profile.html?id=${agent.id}" 
+                                   class="text-gray-400 text-sm hover:text-primary transition-colors">
+                                    View Profile →
+                                </a>
+                            </div>
+                        `;
+                    }).join('');
+
+                } catch (error) {
+                    console.error('Failed to load agents:', error);
+                    agentsGrid.innerHTML = `
+                        <div class="col-span-full text-center py-10 text-gray-400">
+                            Unable to load agents. Please try again later.
+                        </div>
+                    `;
+                }
+            }
+
+            // Load agents when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadTopAgents);
+            } else {
+                loadTopAgents();
+            }
+        })();
+    </script>
 </body>
 
 </html>

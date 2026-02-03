@@ -38,5 +38,27 @@ public class DataInitializer implements CommandLineRunner {
             userRepository.save(user);
             System.out.println("Regular user created: user@example.com / password");
         }
+
+        if (!userRepository.existsByEmail("admin2@example.nsbm.ac.lk")) {
+            User admin2 = User.builder()
+                    .name("admin2")
+                    .email("admin2@example.nsbm.ac.lk")
+                    .password(passwordEncoder.encode("Ad1234"))
+                    .role(Role.ADMIN)
+                    .build();
+            userRepository.save(admin2);
+            System.out.println("✅ Test user created: email=admin2@example.nsbm.ac.lk, password=Ad1234");
+        }
+
+        if (!userRepository.existsByEmail("agent@proptech.com")) {
+            User agent = User.builder()
+                    .name("Agent Smith")
+                    .email("agent@proptech.com")
+                    .password(passwordEncoder.encode("AgentPassword123!"))
+                    .role(Role.AGENT)
+                    .build();
+            userRepository.save(agent);
+            System.out.println("✅ Agent user created: email=agent@proptech.com, password=AgentPassword123!");
+        }
     }
 }

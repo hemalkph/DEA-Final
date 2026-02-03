@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Inquiry Chat Details</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06f980",
+                        "primary-hover": "#05d66d",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#0f2319", // Dark green tint for subtle backgrounds
+                        "surface-dark": "#111814",
+                        "chat-user-bg": "#1a1a1a",
+                        "chat-agent-bg": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for modern look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111814;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #273a30;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06f980;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-display h-screen flex flex-col overflow-hidden">
+    <!-- Main Layout Container -->
+    <div class="flex flex-1 h-full w-full">
+        <!-- Left Panel: Property Summary -->
+        <!-- Hidden on mobile, visible on lg screens and up. Width fixed or percentage. -->
+        <div
+            class="hidden lg:flex w-[350px] xl:w-[400px] flex-col bg-[#111814] border-r border-[#273a30] h-full flex-shrink-0 z-10 shadow-[4px_0_24px_rgba(0,0,0,0.5)]">
+            <!-- Property Header/Image -->
+            <div class="relative h-64 w-full flex-shrink-0">
+                <div class="absolute inset-0 bg-center bg-cover"
+                    data-alt="Modern seaside luxury villa exterior with pool at sunset"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBnbW8tIIWXT8wsSU1hpis2lDbfwLq7uJ72kVFgZHV-xJxQpR7Cig_dUjy8neEmZq1hM_qPUNADXAxiVY_vJU2T35JMaA04EGKA-wphAq_vJaPVQFLov7TW8VehgZ4Ea_f9xoPttjgsagglh2f41OYT3nNOkTdsn-y_T_IGIMoZSds-_x8OqUTiPAMdC7BCPX6JKl14x3kBupHdpsBPxwZ8xx1ME89ltQEc-UM3-Pt4NTjMYvg_zyLfY-uJd7UkS_p2ufrtc5mCieI_");'>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#111814] to-transparent"></div>
+                <div class="absolute bottom-4 left-4 right-4">
+                    <span
+                        class="inline-flex items-center rounded-md bg-black/60 backdrop-blur-md px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/30">
+                        For Sale
+                    </span>
+                </div>
+                <!-- Back Button -->
+                <a href="/user-inquiries.html"
+                    class="absolute top-4 left-4 bg-black/50 hover:bg-black/70 p-2 rounded-full backdrop-blur-md transition-colors text-white">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+            </div>
+            <!-- Property Details -->
+            <div class="flex flex-col p-6 gap-6 overflow-y-auto">
+                <div>
+                    <h2 class="text-2xl font-bold leading-tight tracking-tight text-white mb-1">Seaside Villa - Unit 4B
+                    </h2>
+                    <div class="flex items-center gap-1 text-[#9bbbab] text-sm">
+                        <span class="material-symbols-outlined text-base" data-icon="location_on">location_on</span>
+                        <p>123 Ocean Drive, Miami, FL</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1 border-t border-[#273a30] pt-4">
+                    <p class="text-[#9bbbab] text-sm">Asking Price</p>
+                    <p class="text-3xl font-bold text-white">$1,250,000</p>
+                </div>
+                <!-- Specs Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col p-3 rounded-lg bg-[#1b2721] border border-[#273a30]">
+                        <span class="text-[#9bbbab] text-xs">Bedrooms</span>
+                        <span class="text-lg font-semibold text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-xl" data-icon="bed">bed</span> 4
+                        </span>
+                    </div>
+                    <div class="flex flex-col p-3 rounded-lg bg-[#1b2721] border border-[#273a30]">
+                        <span class="text-[#9bbbab] text-xs">Bathrooms</span>
+                        <span class="text-lg font-semibold text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-xl"
+                                data-icon="bathtub">bathtub</span> 3.5
+                        </span>
+                    </div>
+                    <div class="flex flex-col p-3 rounded-lg bg-[#1b2721] border border-[#273a30]">
+                        <span class="text-[#9bbbab] text-xs">Square Ft</span>
+                        <span class="text-lg font-semibold text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-xl"
+                                data-icon="square_foot">square_foot</span> 3,200
+                        </span>
+                    </div>
+                    <div class="flex flex-col p-3 rounded-lg bg-[#1b2721] border border-[#273a30]">
+                        <span class="text-[#9bbbab] text-xs">Year Built</span>
+                        <span class="text-lg font-semibold text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-xl"
+                                data-icon="calendar_month">calendar_month</span> 2022
+                        </span>
+                    </div>
+                </div>
+                <div class="mt-auto pt-4">
+                    <button
+                        class="w-full flex cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-transparent border border-primary hover:bg-primary/10 text-primary transition-colors text-sm font-bold tracking-wide uppercase">
+                        View Full Property
+                    </button>
+                    <div class="mt-4">
+                        <div class="w-full h-32 rounded-lg overflow-hidden relative">
+                            <div class="absolute inset-0 bg-cover bg-center" data-alt="Map view of Miami location"
+                                data-location="Miami, FL"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpB_1Yq1yQm3DC55gypu_kwxL99KCTaFNsvyvdgVF459OAfuvaakWuq9iAaqbrRdBtExpDVP-N0X5BV-9NIfKezR9kjc5loAxncP5Krgg4G_DSnwqBHig8LaoBInuE36zvY0AK2pMDJHZ4gRfK0aX8pT2ut4pr_v3yUsqSlSJFPKabOdSMVheyN2FkY16CiWtfJvBqOyUHqWmKxlpnKc9i-OFI7wh1QlbCrMDVwVhEuVe-c2VLgCJgzfxAOIJy1J9zsMs2A0jlE28u");'>
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-black/20 hover:bg-transparent transition-all cursor-pointer flex items-center justify-center group">
+                                <span
+                                    class="bg-black/80 text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity">Open
+                                    Map</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Right Panel: Chat Interface -->
+        <div class="flex-1 flex flex-col h-full bg-black relative">
+            <!-- Chat Header -->
+            <header
+                class="h-20 flex-shrink-0 bg-[#111814] border-b border-[#273a30] flex items-center justify-between px-6 z-20">
+                <div class="flex items-center gap-4">
+                    <!-- Mobile Back Button -->
+                    <a href="/user-inquiries.html" class="lg:hidden text-white mr-2">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </a>
+                    <div class="relative">
+                        <div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border-2 border-[#273a30]"
+                            data-alt="Portrait of real estate agent Sarah Jenkins"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDx96h_u6r9HIWpWR_NG5cASA6LE8vTJP_OmvmJ-2yoE8gHJIy93OAPrIC4txUNj_7ZsIJQE7MoCa2ZqzQwdm2ZphaedSpMjilpGdWHjU6zoFemNS6a-2faPkLBEz8YBiX3W4zQM-nmTWOlRE6tCX5OnDHnddcYzTUKfyMm4zP_cVdaysUL8C1A2vE7m9ir3cU5_5prR7dgLD6hSO2goB5-Crm2VKYYYXXXOO6HNj9Ce2oAy293SBY6PdCudKF8XdtDpPAvZ0m2eTjN");'>
+                        </div>
+                        <div
+                            class="absolute bottom-0 right-0 h-3 w-3 bg-primary rounded-full border-2 border-[#111814]">
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <h3 class="text-white text-lg font-bold leading-none">Sarah Jenkins</h3>
+                        <p class="text-[#9bbbab] text-sm font-normal mt-1">Lead Agent • Online</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button aria-label="Call Agent"
+                        class="flex items-center justify-center h-10 w-10 rounded-full bg-[#1b2721] hover:bg-[#273a30] text-white transition-colors">
+                        <span class="material-symbols-outlined" data-icon="call">call</span>
+                    </button>
+                    <button aria-label="Property Details"
+                        class="flex items-center justify-center h-10 w-10 rounded-full bg-[#1b2721] hover:bg-[#273a30] text-white transition-colors xl:hidden">
+                        <span class="material-symbols-outlined" data-icon="info">info</span>
+                    </button>
+                    <button
+                        class="hidden sm:flex h-10 px-5 items-center justify-center rounded-lg bg-primary hover:bg-primary-hover text-black text-sm font-bold shadow-[0_0_15px_rgba(6,249,128,0.2)] transition-all">
+                        Request Visit
+                    </button>
+                </div>
+            </header>
+            <!-- Messages Area -->
+            <div
+                class="flex-1 overflow-y-auto p-6 flex flex-col gap-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed">
+                <!-- Date Divider -->
+                <div class="flex justify-center my-2">
+                    <span
+                        class="text-[#566860] text-xs font-medium px-3 py-1 bg-[#111814] rounded-full border border-[#273a30]">Today,
+                        Oct 24</span>
+                </div>
+                <!-- Agent Message (SingleMessage Variant) -->
+                <div class="flex items-end gap-3 justify-start max-w-[85%]">
+                    <div class="bg-center bg-no-repeat bg-cover rounded-full h-8 w-8 flex-shrink-0 border border-[#273a30]"
+                        data-alt="Agent Sarah avatar small"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAG7Uod4RVUtfAszdTfy11o2l629ZYpoH-uZhIXSwKy_-_lTxf0KHhydp7TEEIsWLSfTdpazJOaYc8pyWggspLCW4GCQweGI0SGt0vX_qqFGDkLoVvGxOX_oGdyjsuKrGLy5UDsgZ6dsZzXnWkPJzTwmHXBuPCKRKwoS1zflstIgafV8F1waYbPntckbyrWAtUKxbtvpk0AkgxklRasjilsfOSs89IvKuJidIzi0bl1IU8q8h1LP8_8zarjFvSfcxlw5duNtmE1_dAs");'>
+                    </div>
+                    <div class="flex flex-col gap-1 items-start">
+                        <div class="flex items-center gap-2 ml-1">
+                            <span class="text-[#9bbbab] text-xs">Sarah Jenkins</span>
+                            <span class="text-[#566860] text-[10px]">10:42 AM</span>
+                        </div>
+                        <div
+                            class="relative px-5 py-4 bg-black border border-[#273a30] rounded-2xl rounded-bl-none text-white text-sm leading-relaxed shadow-sm">
+                            Hello! I saw you were interested in the Seaside Villa, Unit 4B. It's a fantastic property
+                            with great sunset views. Do you have any specific questions about the amenities?
+                        </div>
+                    </div>
+                </div>
+                <!-- User Message (SingleMessage Variant - Custom for User) -->
+                <div class="flex items-end gap-3 justify-end self-end max-w-[85%]">
+                    <div class="flex flex-col gap-1 items-end">
+                        <div class="flex items-center gap-2 mr-1">
+                            <span class="text-[#566860] text-[10px]">10:45 AM</span>
+                            <span class="text-[#9bbbab] text-xs">You</span>
+                        </div>
+                        <div
+                            class="relative px-5 py-4 bg-[#1a1a1a] border border-primary/50 rounded-2xl rounded-br-none text-primary shadow-[0_0_10px_rgba(6,249,128,0.05)] text-sm leading-relaxed">
+                            Yes, actually. Are pets allowed in this complex? We have a Golden Retriever.
+                        </div>
+                        <div class="flex items-center gap-1 text-[#06f980] text-[10px] mr-1 opacity-80">
+                            Seen <span class="material-symbols-outlined text-[12px]"
+                                data-icon="done_all">done_all</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Agent Message -->
+                <div class="flex items-end gap-3 justify-start max-w-[85%]">
+                    <div class="bg-center bg-no-repeat bg-cover rounded-full h-8 w-8 flex-shrink-0 border border-[#273a30]"
+                        data-alt="Agent Sarah avatar small"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARHf8mjzF78jrlpr3fMq31ULGzzyk9QBQNuQwxR2PVrhbEhUXIQ1J9B1UBlt55HoE7P6rR9A37ur7XY4BMZ2IQ2LgqNrG7BYkTnUIg1m-ApfhyYPC5l6rjkmTBiXd_sEyq_nv_6vEPZ_fYHqwU5FFx04SGZPkhHBaPkVB3AJnXW1bGp-RoZfs3Xt7LeMl12EIOPsCXsHnVa28nCPbOSeN6WvxSjw3XTKJurGRAaDBXN8lAFtftu3BtXRiZMuXOlaeHG8HrjZxxLyn3");'>
+                    </div>
+                    <div class="flex flex-col gap-1 items-start">
+                        <div class="flex items-center gap-2 ml-1">
+                            <span class="text-[#9bbbab] text-xs">Sarah Jenkins</span>
+                            <span class="text-[#566860] text-[10px]">10:48 AM</span>
+                        </div>
+                        <div
+                            class="relative px-5 py-4 bg-black border border-[#273a30] rounded-2xl rounded-bl-none text-white text-sm leading-relaxed shadow-sm">
+                            Absolutely! The Seaside Villa complex is very pet-friendly. There is actually a dedicated
+                            dog park just 2 blocks away, and the beach access right in front allows dogs before 9 AM and
+                            after 6 PM.
+                        </div>
+                    </div>
+                </div>
+                <!-- Agent Message - Image attachment example -->
+                <div class="flex items-end gap-3 justify-start max-w-[85%]">
+                    <!-- Invisible spacer for alignment since it's the same person speaking -->
+                    <div class="h-8 w-8 flex-shrink-0"></div>
+                    <div class="flex flex-col gap-1 items-start">
+                        <div
+                            class="relative p-2 bg-black border border-[#273a30] rounded-2xl rounded-bl-none text-white shadow-sm overflow-hidden group cursor-pointer">
+                            <div class="h-40 w-60 rounded-lg bg-cover bg-center"
+                                data-alt="Nearby dog park with green grass and trees"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiqIKxSJOFh6uvSdBxONxdzCw5PI2mZQrRnG9GP_THWxS9Oj_ErE7LTe5WZ6m9hy5UjY7RYTd6gdBHP2MxiJvHEHGE3SF-gJAfN9zcRANLXXcnilw1BhVnnNjw5gf1Z05yXZ-tq1mDEsxkrppOzwS3ggjei91eKTkqQBzQ2oO-d0dAeBiGYALV1rm-b8I72eVoZx0cghIChzBHSbJAnAOGXhzO40hTqvkl9WhgPqntARGQXpjWU5JrjLpAMciyO82jGdkDGTrXPetR");'>
+                            </div>
+                            <div class="mt-2 px-1 pb-1 flex justify-between items-center">
+                                <span class="text-xs text-[#9bbbab]">Nearby Dog Park.jpg</span>
+                                <span class="material-symbols-outlined text-[#9bbbab] text-sm group-hover:text-white"
+                                    data-icon="download">download</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- User Message (Typing) -->
+                <div class="flex items-end gap-3 justify-end self-end max-w-[85%]">
+                    <div class="flex flex-col gap-1 items-end">
+                        <div
+                            class="relative px-4 py-3 bg-[#1a1a1a] border border-primary/30 rounded-2xl rounded-br-none">
+                            <div class="flex gap-1 items-center h-4">
+                                <div class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce"></div>
+                                <div class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-.15s]">
+                                </div>
+                                <div class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-.3s]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Input Area (Sticky Footer) -->
+            <div class="p-6 bg-[#111814] border-t border-[#273a30]">
+                <div class="flex flex-col gap-3">
+                    <!-- Quick suggestions (Optional, adds to modern feel) -->
+                    <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+                        <button
+                            class="whitespace-nowrap px-3 py-1.5 rounded-full bg-[#1b2721] border border-[#273a30] text-xs text-[#9bbbab] hover:bg-[#273a30] hover:text-white transition-colors">Is
+                            the price negotiable?</button>
+                        <button
+                            class="whitespace-nowrap px-3 py-1.5 rounded-full bg-[#1b2721] border border-[#273a30] text-xs text-[#9bbbab] hover:bg-[#273a30] hover:text-white transition-colors">When
+                            can I visit?</button>
+                        <button
+                            class="whitespace-nowrap px-3 py-1.5 rounded-full bg-[#1b2721] border border-[#273a30] text-xs text-[#9bbbab] hover:bg-[#273a30] hover:text-white transition-colors">Send
+                            floor plan</button>
+                    </div>
+                    <div
+                        class="flex items-end gap-3 bg-[#0a0f0c] p-2 rounded-xl border border-[#273a30] focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+                        <button aria-label="Attach File"
+                            class="flex-shrink-0 p-2 text-[#9bbbab] hover:text-primary transition-colors rounded-lg hover:bg-[#1b2721]">
+                            <span class="material-symbols-outlined text-2xl" data-icon="attach_file">attach_file</span>
+                        </button>
+                        <textarea
+                            class="flex-1 bg-transparent border-none text-white placeholder-[#566860] focus:ring-0 resize-none py-2.5 max-h-32 min-h-[44px]"
+                            placeholder="Type your reply here..." rows="1"></textarea>
+                        <div class="flex items-center gap-1">
+                            <button aria-label="Emoji"
+                                class="flex-shrink-0 p-2 text-[#9bbbab] hover:text-white transition-colors rounded-lg hover:bg-[#1b2721] hidden sm:block">
+                                <span class="material-symbols-outlined text-xl"
+                                    data-icon="sentiment_satisfied">sentiment_satisfied</span>
+                            </button>
+                            <button
+                                class="flex-shrink-0 flex items-center justify-center h-10 px-4 bg-primary hover:bg-primary-hover text-black font-bold text-sm rounded-lg transition-colors ml-1">
+                                Send
+                                <span class="material-symbols-outlined text-lg ml-1" data-icon="send">send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-2">
+                    <p class="text-[10px] text-[#566860]">Press <span class="font-bold">Enter</span> to send</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

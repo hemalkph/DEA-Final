@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Real Estate User Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06f980",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#0f2319",
+                        "card-dark": "#111111",
+                        "border-dark": "#222222",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #06f980;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #06f980;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-display overflow-hidden h-screen flex">
+    <!-- Left Sidebar -->
+    <aside class="w-64 flex flex-col h-full bg-[#050505] border-r border-border-dark flex-shrink-0">
+        <div class="p-6">
+            <div class="flex items-center gap-3">
+                <div
+                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 bg-gradient-to-br from-primary to-green-800">
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-white text-base font-bold leading-normal">PropTech Co.</h1>
+                    <p class="text-gray-400 text-xs font-normal leading-normal">Management System</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex flex-col gap-2 px-4 mt-4 overflow-y-auto flex-1">
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/20 text-primary border-l-4 border-primary"
+                href="#">
+                <span class="material-symbols-outlined">dashboard</span>
+                <p class="text-sm font-medium leading-normal">Dashboard</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
+                href="/properties.html">
+                <span class="material-symbols-outlined">search</span>
+                <p class="text-sm font-medium leading-normal">Browse</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">favorite</span>
+                <p class="text-sm font-medium leading-normal">Saved</p>
+            </a>
+            <button id="nav-listings"
+                class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors text-left">
+                <span class="material-symbols-outlined">list_alt</span>
+                <p class="text-sm font-medium leading-normal">Listings</p>
+            </button>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
+                href="/user-inquiries.html">
+                <span class="material-symbols-outlined">chat_bubble</span>
+                <p class="text-sm font-medium leading-normal">Inquiries</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <p class="text-sm font-medium leading-normal">Bookings</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <p class="text-sm font-medium leading-normal">Settings</p>
+            </a>
+        </nav>
+        <!-- Sidebar User Dropdown -->
+        <div class="p-4 border-t border-border-dark">
+            <div class="relative">
+                <button id="sidebar-user-btn"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+                    <div id="sidebar-avatar"
+                        class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center text-black font-bold text-sm">
+                        U</div>
+                    <span id="sidebar-username" class="text-sm font-medium flex-1 text-left">User</span>
+                    <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                </button>
+                <div id="sidebar-dropdown"
+                    class="hidden absolute bottom-full left-0 right-0 mb-2 bg-[#111] border border-white/10 rounded-xl shadow-2xl z-50">
+                    <div class="p-2">
+                        <a href="#"
+                            class="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">person</span>
+                            Edit Profile
+                        </a>
+                        <button id="logout-btn"
+                            class="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors text-left">
+                            <span class="material-symbols-outlined text-[18px]">logout</span>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-black relative">
+        <div id="view-dashboard" class="flex flex-col max-w-[1400px] w-full mx-auto p-6 md:p-10 gap-8">
+            <!-- Top Section: Header & Quick Actions -->
+            <div class="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-center">
+                <div class="flex flex-col gap-1">
+                    <h1 class="text-white text-3xl md:text-4xl font-bold leading-tight">Hi, <span
+                            id="welcome-name">User</span> 👋</h1>
+                    <h2 class="text-gray-400 text-lg font-medium">Welcome back to your property journey.</h2>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <button onclick="window.location.href='/properties.html'"
+                            class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary hover:bg-green-400 transition-colors text-black text-sm font-bold tracking-[0.015em] shadow-[0_0_15px_rgba(6,249,128,0.3)]">
+                            <span class="material-symbols-outlined text-[20px] mr-2">travel_explore</span>
+                            Browse Properties
+                        </button>
+                        <button
+                            class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-[#111111] border border-white/20 hover:border-primary text-white hover:text-primary transition-colors text-sm font-bold tracking-[0.015em]">
+                            <span class="material-symbols-outlined text-[20px] mr-2">mail</span>
+                            My Inquiries
+                        </button>
+                        <button
+                            class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-[#111111] border border-white/20 hover:border-primary text-white hover:text-primary transition-colors text-sm font-bold tracking-[0.015em]">
+                            <span class="material-symbols-outlined text-[20px] mr-2">key</span>
+                            Book a Visit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Profile Card -->
+                <div
+                    class="bg-card-dark border border-border-dark rounded-xl p-4 flex items-center gap-4 min-w-[300px] shadow-lg">
+                    <div class="relative">
+                        <div id="profile-avatar"
+                            class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center text-black font-bold text-xl border-2 border-primary">
+                            U</div>
+                        <div class="absolute -bottom-1 -right-1 bg-black rounded-full p-1">
+                            <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <div class="flex justify-between items-center mb-1">
+                            <span id="profile-name" class="font-bold text-white">User</span>
+                            <span id="profile-role"
+                                class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Buyer</span>
+                        </div>
+                        <div class="w-full bg-white/10 rounded-full h-1.5 mb-1">
+                            <div class="bg-primary h-1.5 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <span class="text-xs text-gray-400">85% Profile Completion</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Properties Section -->
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-white">Saved Properties</h3>
+                    <a class="text-sm text-primary hover:underline" href="/properties.html">Browse More</a>
+                </div>
+                <div id="saved-properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated by JS -->
+                    <div class="col-span-full text-center py-10 bg-white/5 rounded-xl border border-white/5">
+                        <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto">
+                        </div>
+                        <p class="text-gray-400 mt-4">Loading saved properties...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recently Viewed -->
+            <div class="flex flex-col gap-4">
+                <h3 class="text-xl font-bold text-white">Recently Viewed</h3>
+                <div class="flex gap-4 overflow-x-auto pb-4">
+                    <div
+                        class="min-w-[200px] h-32 rounded-lg relative overflow-hidden group cursor-pointer border border-border-dark hover:border-primary bg-white/5 flex items-center justify-center">
+                        <p class="text-gray-500 text-sm">No recent views</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="bg-card-dark border border-border-dark rounded-xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">notifications</span>
+                        Notifications
+                    </h3>
+                    <button class="text-xs text-gray-400 hover:text-white">Clear All</button>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="flex gap-3 items-start">
+                        <div class="bg-primary/20 p-2 rounded-full text-primary shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">waving_hand</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-white">Welcome to your dashboard! Start exploring properties.</p>
+                            <p class="text-xs text-gray-500">Just now</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-10"></div>
+        </div>
+
+        <!-- Listings View -->
+        <div id="view-listings" class="hidden flex-col max-w-[1400px] w-full mx-auto p-6 md:p-10 gap-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-white text-3xl font-bold">My Listings</h1>
+                    <p class="text-gray-400 mt-1">Manage your property listings and status.</p>
+                </div>
+                <button id="btn-add-listing"
+                    class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary hover:bg-green-400 transition-colors text-black text-sm font-bold tracking-[0.015em] shadow-[0_0_15px_rgba(6,249,128,0.3)]">
+                    <span class="material-symbols-outlined text-[20px] mr-2">add_circle</span>
+                    Add Listing
+                </button>
+            </div>
+
+            <div id="my-listings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Populated by JS -->
+                <div class="col-span-full text-center py-20 bg-white/5 rounded-xl border border-white/5">
+                    <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+                    <p class="text-gray-400 mt-4">Loading your listings...</p>
+                </div>
+            </div>
+            <div class="h-10"></div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="listing-modal"
+        class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div
+            class="bg-[#111] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#222] shadow-2xl relative">
+            <button id="btn-close-modal"
+                class="absolute top-4 right-4 text-gray-400 hover:text-white z-10 p-2 rounded-full hover:bg-white/10 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-white">List Your Property</h2>
+                    <p class="text-gray-400">Fill out details below for review.</p>
+                </div>
+                <form id="dashboardListingForm" class="space-y-6">
+                    <!-- Basic Info -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><span
+                                class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs">1</span>
+                            Basic Info</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Type</label>
+                                <select id="dashboardPropertyType" required
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                    <option value="" class="bg-[#111]">Select Type</option>
+                                    <option value="HOUSE" class="bg-[#111]">House</option>
+                                    <option value="APARTMENT" class="bg-[#111]">Apartment</option>
+                                    <option value="LAND" class="bg-[#111]">Land</option>
+                                    <option value="COMMERCIAL" class="bg-[#111]">Commercial</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Price (LKR)</label>
+                                <input type="number" id="dashboardPropertyPrice" required placeholder="e.g 25000000"
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Address</label>
+                                <input type="text" id="dashboardPropertyAddress" required placeholder="Full Address"
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Title</label>
+                                <input type="text" id="dashboardPropertyTitle" required placeholder="Property Title"
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Description</label>
+                                <textarea id="dashboardPropertyDescription" rows="3" placeholder="Description..."
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><span
+                                class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs">2</span>
+                            Details</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div><label class="block text-xs font-medium text-gray-400 mb-1">Beds</label><input
+                                    type="number" id="dashboardBedrooms" placeholder="0"
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div><label class="block text-xs font-medium text-gray-400 mb-1">Baths</label><input
+                                    type="number" id="dashboardBathrooms" placeholder="0"
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div><label class="block text-xs font-medium text-gray-400 mb-1">SqFt</label><input
+                                    type="number" id="dashboardAreaSqFt" placeholder="0"
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                        </div>
+                        <!-- Amenities Checkboxes -->
+                        <div class="col-span-full">
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Amenities</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Pool"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Pool</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Gym"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Gym</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Parking"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Parking</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Garden"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Garden</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Security"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Security</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="AC"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">AC</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Furnished"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Furnished</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                        name="amenities" value="Balcony"
+                                        class="w-4 h-4 rounded bg-white/10 border-white/20 text-primary focus:ring-primary"><span
+                                        class="text-sm text-gray-300">Balcony</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agent -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><span
+                                class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs">3</span>
+                            Agent</h3>
+                        <select name="agent" id="dashboardAgentSelect" required
+                            class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            <option value="" class="bg-[#111]">Select Agent</option>
+                        </select>
+                    </div>
+
+                    <!-- Photos -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><span
+                                class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs">4</span>
+                            Photos</h3>
+                        <div id="dashboardDropZone"
+                            class="border-2 border-dashed border-white/10 rounded-xl p-8 text-center hover:border-primary/50 transition-colors cursor-pointer bg-white/5">
+                            <p class="text-gray-400 mb-2">Drag & Drop Photos</p>
+                            <input type="file" id="dashboardPropertyImages" multiple accept="image/*" class="hidden">
+                            <button type="button" onclick="document.getElementById('dashboardPropertyImages').click()"
+                                class="bg-white/10 text-white px-4 py-2 rounded-lg text-sm hover:bg-white/20">Select
+                                Files</button>
+                        </div>
+                        <div id="dashboardImagePreviewContainer" class="grid grid-cols-4 gap-2"></div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><span
+                                class="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs">5</span>
+                            Contact</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium text-gray-400 mb-1">Name</label><input
+                                    type="text" id="dashboardContactName" required
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div><label class="block text-sm font-medium text-gray-400 mb-1">Phone</label><input
+                                    type="tel" id="dashboardContactPhone" required
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                            <div class="md:col-span-2"><label
+                                    class="block text-sm font-medium text-gray-400 mb-1">Email</label><input
+                                    type="email" id="dashboardContactEmail" required
+                                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10">
+                        <button type="submit"
+                            class="w-full py-3 bg-primary text-black font-bold rounded-xl hover:bg-green-400 transition-colors shadow-lg shadow-primary/20">Submit
+                            Listing</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module">
+        import { propertyApi } from '/src/main.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check if user is logged in
+            const userStr = localStorage.getItem('user');
+            if (!userStr) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const user = JSON.parse(userStr);
+
+            // Basic Role Protection
+            if (user.role === 'ADMIN') {
+                window.location.href = '/admin-dashboard.html';
+                return;
+            }
+
+            // Update UI with user data
+            const firstName = user.name ? user.name.split(' ')[0] : 'User';
+            const initial = firstName.charAt(0).toUpperCase();
+
+            document.getElementById('welcome-name').textContent = firstName;
+            document.getElementById('profile-name').textContent = user.name || 'User';
+            document.getElementById('profile-avatar').textContent = initial;
+            document.getElementById('sidebar-avatar').textContent = initial;
+            document.getElementById('sidebar-username').textContent = firstName;
+
+            // Sidebar dropdown toggle
+            const sidebarUserBtn = document.getElementById('sidebar-user-btn');
+            const sidebarDropdown = document.getElementById('sidebar-dropdown');
+
+            sidebarUserBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebarDropdown.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', () => {
+                sidebarDropdown.classList.add('hidden');
+            });
+
+            // Logout handler
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                window.location.href = '/index.html';
+            });
+
+            // Load Saved Properties
+            const loadSavedProperties = async () => {
+                const grid = document.getElementById('saved-properties-grid');
+                if (!grid) return;
+
+                const getSaved = () => {
+                    const saved = localStorage.getItem(`saved_properties_${user.email}`);
+                    return saved ? JSON.parse(saved) : [];
+                };
+
+                const savedIds = getSaved();
+
+                if (savedIds.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-10 bg-white/5 rounded-xl border border-white/5">
+                            <span class="material-symbols-outlined text-4xl text-gray-600 mb-2">favorite_border</span>
+                            <p class="text-gray-400">You haven't saved any properties yet.</p>
+                            <a href="/properties.html" class="text-primary hover:underline mt-2 inline-block">Browse Properties</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                try {
+                    const response = await propertyApi.getAll();
+                    const allProperties = response.data;
+                    const savedProperties = allProperties.filter(p => savedIds.includes(String(p.id)) || savedIds.includes(p.id));
+
+                    if (savedProperties.length === 0) {
+                        grid.innerHTML = `
+                            <div class="col-span-full text-center py-10 bg-white/5 rounded-xl border border-white/5">
+                                <span class="material-symbols-outlined text-4xl text-gray-600 mb-2">favorite_border</span>
+                                <p class="text-gray-400">No saved properties found.</p>
+                                <a href="/properties.html" class="text-primary hover:underline mt-2 inline-block">Browse Properties</a>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    grid.innerHTML = savedProperties.map(property => `
+                        <div class="group bg-card-dark rounded-xl border border-border-dark overflow-hidden hover:border-primary/50 transition-all duration-300">
+                            <div class="relative h-40 overflow-hidden">
+                                <div class="absolute top-2 right-2 z-10 bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-red-500 text-[16px]">favorite</span>
+                                </div>
+                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                                     style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=400&q=80'}')">
+                                </div>
+                                <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/90 to-transparent"></div>
+                                <div class="absolute bottom-3 left-3">
+                                    <p class="text-primary font-bold text-lg">LKR ${property.price ? property.price.toLocaleString() : 'N/A'}</p>
+                                </div>
+                            </div>
+                            <div class="p-4 flex flex-col gap-2">
+                                <h4 class="font-semibold text-white truncate">${property.title}</h4>
+                                <p class="text-sm text-gray-400 flex items-center gap-1 truncate">
+                                    <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                    ${property.address || 'Location unavailable'}
+                                </p>
+                                <div class="flex gap-2 mt-2">
+                                    <a href="/view-property.html?id=${property.id}"
+                                       class="flex-1 bg-white/10 hover:bg-primary hover:text-black text-white text-xs py-2 rounded font-medium transition-colors text-center">
+                                        View Details
+                                    </a>
+                                    <button onclick="removeSaved('${property.id}')" aria-label="Remove"
+                                        class="bg-white/5 hover:bg-red-500/20 hover:text-red-500 text-gray-400 p-2 rounded transition-colors">
+                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                } catch (error) {
+                    console.error('Error loading saved properties:', error);
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-10 bg-white/5 rounded-xl border border-white/5">
+                            <span class="material-symbols-outlined text-4xl text-red-500 mb-2">error</span>
+                            <p class="text-red-400">Error loading properties. Please try again.</p>
+                        </div>
+                    `;
+                }
+            };
+
+            // Helper to remove saved property
+            window.removeSaved = (id) => {
+                const saved = localStorage.getItem(`saved_properties_${user.email}`);
+                let savedIds = saved ? JSON.parse(saved) : [];
+                savedIds = savedIds.filter(savedId => String(savedId) !== String(id));
+                localStorage.setItem(`saved_properties_${user.email}`, JSON.stringify(savedIds));
+                loadSavedProperties();
+            };
+
+            loadSavedProperties();
+
+            // --- LISTINGS FEATURE LOGIC ---
+
+            // Elements
+            const viewDashboard = document.getElementById('view-dashboard');
+            const viewListings = document.getElementById('view-listings');
+            const navListings = document.getElementById('nav-listings');
+            const sidebarLinks = document.querySelectorAll('aside nav a');
+            const dashboardLink = sidebarLinks[0]; // Assuming dashboard is first link
+
+            const modal = document.getElementById('listing-modal');
+            const btnAddListing = document.getElementById('btn-add-listing');
+            const btnCloseModal = document.getElementById('btn-close-modal');
+            const listingForm = document.getElementById('dashboardListingForm');
+
+            // View Switching
+            if (navListings) {
+                navListings.addEventListener('click', () => {
+                    viewDashboard.classList.add('hidden');
+                    viewListings.classList.remove('hidden');
+                    viewListings.classList.add('flex');
+                    loadMyListings(); // Fetch on view
+                });
+            }
+
+            if (dashboardLink) {
+                dashboardLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    viewListings.classList.add('hidden');
+                    viewListings.classList.remove('flex');
+                    viewDashboard.classList.remove('hidden');
+                });
+            }
+
+            // Modal Logic
+            if (btnAddListing) {
+                btnAddListing.addEventListener('click', () => {
+                    modal.classList.remove('hidden');
+                    loadAgentsDialog();
+                });
+            }
+
+            if (btnCloseModal) {
+                btnCloseModal.addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
+            }
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.add('hidden');
+            });
+
+            // Agents
+            async function loadAgentsDialog() {
+                const select = document.getElementById('dashboardAgentSelect');
+                if (select.options.length > 1) return;
+                try {
+                    const API_BASE = 'http://localhost:8080';
+                    const res = await fetch(`${API_BASE}/api/agents/public`);
+                    if (res.ok) {
+                        const agents = await res.json();
+                        agents.forEach(agent => {
+                            const opt = document.createElement('option');
+                            opt.value = agent.name;
+                            opt.textContent = agent.name;
+                            opt.className = "bg-[#111]";
+                            select.appendChild(opt);
+                        });
+                    }
+                } catch (e) { console.error("Agent load error", e); }
+            }
+
+            // Image Upload
+            const fileInput = document.getElementById('dashboardPropertyImages');
+            const dropZone = document.getElementById('dashboardDropZone');
+            const previewContainer = document.getElementById('dashboardImagePreviewContainer');
+            let selectedFiles = [];
+
+            const handleFiles = (files) => {
+                selectedFiles = [...selectedFiles, ...Array.from(files)];
+                updatePreviews();
+            };
+
+            const updatePreviews = () => {
+                previewContainer.innerHTML = '';
+                selectedFiles.forEach((file, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'relative aspect-square rounded-lg overflow-hidden border border-white/20 group';
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.className = 'w-full h-full object-cover';
+                    const btn = document.createElement('button');
+                    btn.className = 'absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity';
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">close</span>';
+                    btn.onclick = (e) => { e.stopPropagation(); selectedFiles.splice(index, 1); updatePreviews(); };
+                    div.appendChild(img);
+                    div.appendChild(btn);
+                    previewContainer.appendChild(div);
+                });
+            };
+
+            if (fileInput) fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, (ev) => { ev.preventDefault(); ev.stopPropagation(); }));
+            ['dragenter', 'dragover'].forEach(e => dropZone.addEventListener(e, () => dropZone.classList.add('border-primary')));
+            ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, () => dropZone.classList.remove('border-primary')));
+            dropZone.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files));
+
+            // Submit
+            listingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = listingForm.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = 'Submitting...';
+
+                try {
+                    const formData = new FormData();
+                    formData.append('title', document.getElementById('dashboardPropertyTitle').value);
+                    formData.append('description', document.getElementById('dashboardPropertyDescription').value);
+                    formData.append('address', document.getElementById('dashboardPropertyAddress').value);
+                    formData.append('price', document.getElementById('dashboardPropertyPrice').value);
+                    formData.append('type', document.getElementById('dashboardPropertyType').value);
+                    formData.append('bedrooms', document.getElementById('dashboardBedrooms').value || 0);
+                    formData.append('bathrooms', document.getElementById('dashboardBathrooms').value || 0);
+                    formData.append('areaSqFt', document.getElementById('dashboardAreaSqFt').value || 0);
+
+                    const amenities = Array.from(document.querySelectorAll('#dashboardListingForm input[name="amenities"]:checked')).map(cb => cb.value);
+                    amenities.forEach(a => formData.append('amenities', a));
+
+                    formData.append('agent', document.getElementById('dashboardAgentSelect').value); // IMPORTANT: Property entity uses 'agent' string? Or 'agentName'? Let's check DTO. PropertySubmissionDTO usually maps fields.
+                    // PropertyController.submitProperty uses @RequestParam("agent") String agentName.
+
+                    formData.append('ownerName', document.getElementById('dashboardContactName').value);
+                    formData.append('ownerPhone', document.getElementById('dashboardContactPhone').value);
+                    formData.append('ownerEmail', document.getElementById('dashboardContactEmail').value);
+
+                    selectedFiles.forEach(f => formData.append('images', f));
+
+                    const token = localStorage.getItem('token');
+                    const API_BASE = 'http://localhost:8080';
+                    const res = await fetch(`${API_BASE}/api/properties/submit`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData
+                    });
+
+                    if (res.ok) {
+                        alert('Listing submitted successfully!');
+                        modal.classList.add('hidden');
+                        listingForm.reset();
+                        selectedFiles = [];
+                        updatePreviews();
+                        loadMyListings();
+                    } else {
+                        const err = await res.json();
+                        alert('Failed: ' + (err.message || 'Unknown error'));
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Error submitting listing.');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            });
+
+            // Fetch Findings
+            async function loadMyListings() {
+                const grid = document.getElementById('my-listings-grid');
+                grid.innerHTML = '<div class="col-span-full text-center py-10"><div class="animate-spin rounded-full h-8 w-8 border-t-2 border-primary mx-auto"></div></div>';
+
+                try {
+                    const API_BASE = 'http://localhost:8080';
+                    const token = localStorage.getItem('token');
+                    const res = await fetch(`${API_BASE}/api/properties/my-listings`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+
+                    if (res.ok) {
+                        const listings = await res.json();
+                        if (listings.length === 0) {
+                            grid.innerHTML = '<div class="col-span-full text-center text-gray-400 py-10">No listings found. Add one!</div>';
+                            return;
+                        }
+
+                        grid.innerHTML = listings.map(p => {
+                            let badgeColor = 'bg-gray-500/20 text-gray-400';
+                            let statusLabel = p.status;
+                            if (p.status === 'PENDING') { badgeColor = 'bg-yellow-500/20 text-yellow-500'; }
+                            if (p.status === 'AVAILABLE') { badgeColor = 'bg-green-500/20 text-green-500'; statusLabel = 'APPROVED'; }
+                            if (p.status === 'REJECTED') { badgeColor = 'bg-red-500/20 text-red-500'; }
+                            if (p.status === 'SOLD') { badgeColor = 'bg-blue-500/20 text-blue-500'; }
+
+                            return `
+                                <div class="bg-[#111] border border-[#222] rounded-xl overflow-hidden hover:border-primary/50 transition-all">
+                                    <div class="h-48 bg-cover bg-center relative" style="background-image: url('${p.imageUrl || '/placeholder.jpg'}')">
+                                        <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${badgeColor}">
+                                            ${statusLabel}
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h4 class="text-white font-bold truncate">${p.title}</h4>
+                                        <p class="text-gray-400 text-xs truncate">${p.address}</p>
+                                        <p class="text-primary font-bold mt-2">LKR ${p.price.toLocaleString()}</p>
+                                        ${p.status === 'REJECTED' && p.rejectionReason ? `<p class="text-red-400 text-xs mt-2">Reason: ${p.rejectionReason}</p>` : ''}
+                                    </div>
+                                </div>
+                             `;
+                        }).join('');
+                    } else {
+                        grid.innerHTML = '<div class="col-span-full text-center text-red-400">Failed to load listings.</div>';
+                    }
+                } catch (e) {
+                    console.error(e);
+                    grid.innerHTML = '<div class="col-span-full text-center text-red-400">Network error.</div>';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

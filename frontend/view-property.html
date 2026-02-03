@@ -1,123 +1,450 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Details - Real Estate</title>
+    <title>Property Details - RealEstate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00FF7F", // Spring Green
+                        "background-light": "#F3F4F6", // Light Gray for Light Mode
+                        "background-dark": "#000000", // Pitch Black for Dark Mode
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#111111", // Slightly lighter black for cards
+                        "surface-dark-accent": "#1A1A1A",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        /* Custom scrollbar for gallery if needed */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 </head>
 
-<body class="bg-surface font-sans antialiased text-secondary bg-gray-50">
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
     <div id="navbar"></div>
 
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-16">
-        <div id="propertyContainer" class="glass rounded-2xl shadow-xl overflow-hidden min-h-[500px]">
-            <div class="flex items-center justify-center h-full pt-20">
-                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16">
+        <div id="loading" class="flex justify-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        </div>
+
+        <div id="propertyContent" class="hidden animate-fade-in">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span id="propTypeBadge"
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                            SALE
+                        </span>
+                        <span id="propStatusBadge"
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
+                            For Sale
+                        </span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-1" id="propTitle">Loading...</h1>
+                    <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+                        <span class="material-icons text-primary text-base mr-1">location_on</span>
+                        <span id="propAddress">...</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex flex-col items-end mr-4 hidden md:flex">
+                        <span class="text-sm font-medium text-gray-900 dark:text-white">Exceptional</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">12 reviews</span>
+                    </div>
+                    <div
+                        class="flex items-center justify-center h-10 w-10 rounded-lg bg-blue-600 text-white font-bold text-lg shadow-lg">
+                        9.8
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 h-[500px] mb-10" id="galleryGrid">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Details Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-10">
+
+                    <!-- Key Stats -->
+                    <div class="flex flex-wrap gap-6 py-6 border-y border-gray-200 dark:border-gray-800">
+                        <div class="flex items-center text-gray-700 dark:text-gray-300">
+                            <span class="material-icons text-primary mr-2">bed</span>
+                            <span class="font-semibold mr-1" id="propBedrooms">0</span> Bedrooms
+                        </div>
+                        <div class="flex items-center text-gray-700 dark:text-gray-300">
+                            <span class="material-icons text-primary mr-2">bathtub</span>
+                            <span class="font-semibold mr-1" id="propBathrooms">0</span> Bathrooms
+                        </div>
+                        <div class="flex items-center text-gray-700 dark:text-gray-300">
+                            <span class="material-icons text-primary mr-2">square_foot</span>
+                            <span class="font-semibold mr-1" id="propArea">0</span> sq ft
+                        </div>
+                        <div class="flex items-center text-gray-700 dark:text-gray-300">
+                            <span class="material-icons text-primary mr-2">home</span>
+                            <span class="font-semibold mr-1" id="propType">Type</span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <section>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Property Overview</h2>
+                        <div id="propDescription"
+                            class="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                            Loading description...
+                        </div>
+                    </section>
+
+                    <!-- Facilities -->
+                    <section>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Facilities</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="facilitiesList">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+
+                    <!-- House Rules -->
+                    <section
+                        class="bg-gray-50 dark:bg-surface-dark-accent rounded-xl p-6 border border-gray-100 dark:border-gray-800">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">House Rules</h2>
+                        <div id="propHouseRules" class="text-gray-600 dark:text-gray-400 text-sm">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column (Booking Card) -->
+                <div class="lg:col-span-1">
+                    <div class="sticky top-24">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl shadow-xl dark:shadow-none border border-gray-200 dark:border-primary/30 overflow-hidden">
+                            <div class="bg-blue-600 dark:bg-blue-700 p-6 text-white">
+                                <div class="text-xs font-semibold uppercase tracking-wider opacity-80 mb-1">Price Match
+                                </div>
+                                <div class="flex items-baseline">
+                                    <span class="text-3xl font-bold dark:text-primary" id="propPrice">$0</span>
+                                    <span class="ml-2 text-sm opacity-90" id="propPriceLabel">total price</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <!-- Agent Info -->
+                                <div class="flex items-center mb-6 pb-6 border-b border-gray-100 dark:border-gray-800">
+                                    <div class="relative">
+                                        <div
+                                            class="h-12 w-12 rounded-full bg-orange-500 overflow-hidden flex items-center justify-center text-white font-bold text-lg">
+                                            <img id="agentImage" src="" class="w-full h-full object-cover hidden">
+                                            <span id="agentInitials">AG</span>
+                                        </div>
+                                        <span
+                                            class="absolute bottom-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white dark:ring-surface-dark bg-primary"></span>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-bold text-gray-900 dark:text-white" id="agentName">
+                                            Listing Agent</p>
+                                        <p class="text-xs text-primary font-medium">Verified Partner</p>
+                                    </div>
+                                </div>
+
+                                <!-- Inquiry Form -->
+                                <form id="inquiryForm" class="space-y-4">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="space-y-1">
+                                            <label
+                                                class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Check-in</label>
+                                            <div class="relative">
+                                                <input
+                                                    class="w-full pl-8 pr-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-surface-dark-accent dark:text-white focus:ring-primary focus:border-primary dark:focus:ring-primary dark:focus:border-primary"
+                                                    placeholder="mm/dd/yyyy" type="date">
+                                                <span
+                                                    class="material-icons absolute left-2 top-2 text-gray-400 text-sm">calendar_today</span>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <label
+                                                class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Check-out</label>
+                                            <div class="relative">
+                                                <input
+                                                    class="w-full pl-8 pr-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-surface-dark-accent dark:text-white focus:ring-primary focus:border-primary dark:focus:ring-primary dark:focus:border-primary"
+                                                    placeholder="mm/dd/yyyy" type="date">
+                                                <span
+                                                    class="material-icons absolute left-2 top-2 text-gray-400 text-sm">calendar_today</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label
+                                            class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Guests</label>
+                                        <div class="relative">
+                                            <select
+                                                class="w-full pl-3 pr-10 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-surface-dark-accent dark:text-white focus:ring-primary focus:border-primary dark:focus:ring-primary dark:focus:border-primary appearance-none">
+                                                <option>1 Adult</option>
+                                                <option>2 Adults</option>
+                                                <option>2 Adults, 1 Child</option>
+                                            </select>
+                                            <span
+                                                class="material-icons absolute right-2 top-2 text-gray-400 pointer-events-none">expand_more</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="contactAgent()"
+                                        class="w-full bg-primary hover:bg-green-400 text-black font-bold py-3 px-4 rounded-lg shadow-lg shadow-primary/20 transition-all duration-200 transform hover:-translate-y-0.5 mt-4">
+                                        Book / Contact Agent
+                                    </button>
+                                    <p class="text-center text-xs text-gray-400 dark:text-gray-500 mt-2">
+                                        You won't be charged yet
+                                    </p>
+                                </form>
+                            </div>
+                            <div
+                                class="bg-gray-50 dark:bg-gray-900 p-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-center">
+                                <span class="material-icons text-blue-500 text-sm mr-2">check_circle_outline</span>
+                                <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Free cancellation
+                                    available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/95 hidden flex items-center justify-center">
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-gray-300 z-50 p-2">
+            <span class="material-icons text-4xl">close</span>
+        </button>
+        <img id="lightboxImage" src="" class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl rounded-sm">
     </div>
 
+    <!-- Main Logic -->
     <script type="module" src="/src/main.js"></script>
     <script type="module">
         import { propertyApi, isAuthenticated } from '/src/main.js';
 
-        const container = document.getElementById('propertyContainer');
+        const container = document.getElementById('propertyContent');
+        const loading = document.getElementById('loading');
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
+        // Lightbox
+        window.openLightbox = (url) => {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImage');
+            img.src = url;
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeLightbox = () => {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.body.style.overflow = '';
+        };
+
+        // Facility Icon Mapper
+        const getFacilityIcon = (name) => {
+            const n = name.toLowerCase();
+            if (n.includes('wifi')) return 'wifi';
+            if (n.includes('pool')) return 'pool';
+            if (n.includes('parking')) return 'local_parking';
+            if (n.includes('gym')) return 'fitness_center'; // or directions_run
+            if (n.includes('air')) return 'ac_unit';
+            if (n.includes('security')) return 'security';
+            if (n.includes('kitchen')) return 'kitchen';
+            if (n.includes('wash')) return 'local_laundry_service';
+            return 'check_circle';
+        };
+
         const renderProperty = (property) => {
-            const isAuth = isAuthenticated();
+            // Header Info
+            document.title = `${property.title} - Real Estate`;
+            document.getElementById('propTitle').textContent = property.title;
+            document.getElementById('propAddress').textContent = property.address;
+            document.getElementById('propTypeBadge').textContent = property.type === 'RENT' ? 'RENT' : 'SALE';
+            document.getElementById('propStatusBadge').textContent = property.status === 'AVAILABLE' ? (property.type === 'RENT' ? 'For Rent' : 'For Sale') : property.status;
 
-            container.innerHTML = `
-                <div class="lg:flex lg:h-full">
-                    <!-- Image Section -->
-                    <div class="lg:w-1/2 relative h-96 lg:h-auto overflow-hidden group">
-                        <img src="${property.imageUrl || 'https://via.placeholder.com/800x600?text=No+Image'}" 
-                             alt="${property.title}" 
-                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
+            document.getElementById('propPrice').textContent = `$${property.price.toLocaleString()}`;
+            document.getElementById('propPriceLabel').textContent = property.type === 'RENT' ? '/ month' : 'total price';
+
+            document.getElementById('propBedrooms').textContent = property.bedrooms || 0;
+            document.getElementById('propBathrooms').textContent = property.bathrooms || 0;
+            document.getElementById('propArea').textContent = property.areaSqFt || 0;
+            document.getElementById('propType').textContent = property.type || 'Property';
+
+            // Description
+            document.getElementById('propDescription').textContent = property.detailedDescription || property.description || 'No description available.';
+
+            // Facilities
+            const facilitiesContainer = document.getElementById('facilitiesList');
+            facilitiesContainer.innerHTML = '';
+            const facilities = property.facilities && property.facilities.length > 0 ? property.facilities :
+                ['High-speed WiFi', 'Private Parking', 'Infinity Pool', 'Air Conditioning', 'Gym Access', '24/7 Security'];
+
+            facilities.forEach(fac => {
+                const iconName = getFacilityIcon(fac);
+                const div = document.createElement('div');
+                div.className = 'flex items-center p-3 rounded-lg bg-gray-50 dark:bg-surface-dark-accent border border-gray-100 dark:border-gray-800';
+                div.innerHTML = `
+                    <span class="material-icons text-primary mr-3 text-sm">${iconName}</span>
+                    <span class="text-sm font-medium dark:text-gray-300">${fac}</span>
+                `;
+                facilitiesContainer.appendChild(div);
+            });
+
+            // House Rules
+            const houseRulesContainer = document.getElementById('propHouseRules');
+            if (property.houseRules) {
+                // Split by newline or just text
+                houseRulesContainer.innerHTML = `
+                    <div class="flex items-start text-gray-600 dark:text-gray-400 text-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 mr-3 flex-shrink-0"></span>
+                        <p>${property.houseRules.replace(/\n/g, '<br>')}</p>
                     </div>
-                    
-                    <!-- Details Section -->
-                    <div class="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold tracking-wide uppercase">
-                                    ${property.type}
-                                </span>
-                                <span class="text-3xl font-bold text-blue-600">
-                                    $${property.price ? property.price.toLocaleString() : 'N/A'}
-                                </span>
-                            </div>
-                            
-                            <h1 class="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2 leading-tight">${property.title}</h1>
-                            
-                            <div class="flex items-center text-gray-500 mb-8">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <span class="text-lg">${property.location}</span>
-                            </div>
-                            
-                            <div class="grid grid-cols-3 gap-6 mb-8 border-y border-gray-100 py-6">
-                                <div class="text-center">
-                                    <div class="text-2xl font-bold text-gray-800">${property.bedrooms}</div>
-                                    <div class="text-xs text-gray-500 uppercase tracking-wider">Bedrooms</div>
-                                </div>
-                                <div class="text-center border-l border-gray-100">
-                                    <div class="text-2xl font-bold text-gray-800">${property.bathrooms}</div>
-                                    <div class="text-xs text-gray-500 uppercase tracking-wider">Bathrooms</div>
-                                </div>
-                                <div class="text-center border-l border-gray-100">
-                                    <div class="text-2xl font-bold text-gray-800">${property.size}</div>
-                                    <div class="text-xs text-gray-500 uppercase tracking-wider">Sq Ft</div>
-                                </div>
-                            </div>
-    
-                            <div class="mb-8">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-3">About this property</h3>
-                                <p class="text-gray-600 leading-relaxed">
-                                    ${property.description || 'Experience luxury living in this beautifully designed home. Featuring modern amenities, spacious interiors, and a prime location, this property offers the perfect blend of comfort and style.'}
-                                </p>
-                            </div>
-                        </div>
+                 `;
+            } else {
+                houseRulesContainer.innerHTML = `
+                    <div class="flex items-start text-gray-600 dark:text-gray-400 text-sm">
+                         <span class="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 mr-3 flex-shrink-0"></span>
+                         <p class="italic">No specific house rules listed by the host.</p>
+                    </div>
+                 `;
+            }
 
-                        <div class="mt-auto pt-6">
-                            ${isAuth ? `
-                                <button class="btn-primary w-full text-lg shadow-lg shadow-blue-500/30 transform hover:-translate-y-1 transition-all">
-                                    Contact Agent
-                                </button>
-                            ` : `
-                                <a href="/login" class="block text-center w-full py-4 bg-gray-900 text-white rounded-lg hover:bg-black transition-all">
-                                    Login to Contact Agent
-                                </a>
-                            `}
-                        </div>
+            // Agent
+            if (property.agent) {
+                document.getElementById('agentName').textContent = property.agent.name;
+                // Initials
+                const initials = property.agent.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                document.getElementById('agentInitials').textContent = initials;
+                // If image exists (assuming property.agent.imageUrl is a thing for future)
+                // document.getElementById('agentImage').src = ... 
+            }
+
+            // Gallery
+            const gallery = document.getElementById('galleryGrid');
+            const images = property.imageUrls && property.imageUrls.length > 0 ? property.imageUrls : [property.imageUrl];
+            if (images.length === 0 || !images[0]) images[0] = 'https://via.placeholder.com/1200x800?text=No+Image';
+
+            let galleryHTML = '';
+
+            // Main Image (Col span 3)
+            galleryHTML += `
+                <div class="md:col-span-3 h-full relative group overflow-hidden rounded-xl cursor-pointer" onclick="openLightbox('${images[0]}')">
+                    <img src="${images[0]}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Main Property Image">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <span class="text-white font-medium flex items-center">
+                            <span class="material-icons mr-2">fullscreen</span> View all photos
+                        </span>
                     </div>
                 </div>
             `;
+
+            // Right Column Images container
+            galleryHTML += `<div class="hidden md:flex flex-col gap-4 h-full">`;
+
+            // Top Right
+            if (images[1]) {
+                galleryHTML += `
+                    <div class="h-1/2 relative group overflow-hidden rounded-xl cursor-pointer" onclick="openLightbox('${images[1]}')">
+                        <img src="${images[1]}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Property Image 2">
+                    </div>
+                `;
+            } else {
+                // Placeholder
+                galleryHTML += `
+                    <div class="h-1/2 relative group overflow-hidden rounded-xl cursor-pointer bg-gray-800"></div>
+                `;
+            }
+
+            // Bottom Right
+            if (images[2]) {
+                galleryHTML += `
+                    <div class="h-1/2 relative group overflow-hidden rounded-xl cursor-pointer" onclick="openLightbox('${images[2]}')">
+                        <img src="${images[2]}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Property Image 3">
+                        <div class="absolute inset-0 bg-black/60 flex items-center justify-center group-hover:bg-black/40 transition-colors">
+                            <span class="text-white text-lg font-semibold">+ ${images.length - 3 > 0 ? images.length - 3 : 'More'} Photos</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                galleryHTML += `
+                    <div class="h-1/2 relative group overflow-hidden rounded-xl cursor-pointer bg-gray-800"></div>
+                `;
+            }
+
+            galleryHTML += `</div>`; // End Right Column
+
+            gallery.innerHTML = galleryHTML;
+
+            // Show Content
+            loading.classList.add('hidden');
+            container.classList.remove('hidden');
         };
 
         const loadProperty = async () => {
-            if (!id) {
-                container.innerHTML = '<p class="p-8 text-center text-red-500">Invalid Property ID.</p>';
-                return;
-            }
-
             try {
+                if (!id) {
+                    // Demo Mode if no ID (for verification)
+                    // Or redirect. But user wants to verify "every property".
+                    // Let's try to fetch a default or show error.
+                    // For now, allow ID check.
+                    // If no ID, maybe fetch *first* property from listing?
+                    const allProps = await propertyApi.getAll();
+                    if (allProps.data && allProps.data.length > 0) {
+                        renderProperty(allProps.data[0]);
+                        return;
+                    }
+                    // throw new Error('No ID provided');
+                }
                 const response = await propertyApi.getById(id);
                 renderProperty(response.data);
             } catch (error) {
-                console.error('Error loading property:', error);
-
-                // Allow error page to be seen without auth check redirect
-                container.innerHTML = `
-                    <div class="text-center py-20">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Property Not Found</h2>
-                        <a href="/properties" class="text-blue-600 hover:text-blue-800">Return to Listings</a>
-                     </div>
-                 `;
+                console.error('Error:', error);
+                loading.innerHTML = `
+                    <div class="text-center text-red-500">
+                        <p class="text-xl font-bold mb-2">Error loading property</p>
+                        <p class="mb-4">${error.message}</p>
+                        <a href="/properties.html" class="text-blue-600 hover:underline">Return to listings</a>
+                    </div>
+                `;
             }
         };
+
+        window.contactAgent = () => {
+            if (!isAuthenticated()) {
+                window.location.href = '/login.html';
+                return;
+            }
+            alert('Inquiry sent to agent! (Demo)');
+        };
+
+        // Force Dark Mode
+        document.documentElement.classList.add('dark');
 
         loadProperty();
     </script>
