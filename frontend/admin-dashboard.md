@@ -1,5 +1,4 @@
 # Admin Dashboard Documentation
-
 ## Overview
 
 The Admin Dashboard is a comprehensive property management interface for administrators of the Real Estate platform. It provides tools to manage properties, agents, appointments, and inquiries.
